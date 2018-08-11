@@ -1,0 +1,1613 @@
+swagger: '2.0'
+info:
+  description: |
+    This is the documentation of PacLab Backend for User Manager 
+    [http://swagger.io](http://swagger.io) or on 
+    [irc.freenode.net, #swagger](http://swagger.io/irc/). 
+    Created by @pdonaire1.
+  version: 1.0.0
+  title: PacLab UserManager API
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: pablo.donaire@azumo.co
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+host: user.clusters.paclabnw.com
+basePath: /
+schemes:
+  - https
+
+paths:
+  /users/login:
+    post:
+      description: User Login
+      operationId: UserLogin
+      parameters:
+        - name: email
+          type: string
+          in: query
+          description: Email of the user to login
+          required: true
+        - name: password
+          type: string
+          in: query
+          description: Password of the user to login
+          required: true
+      responses:
+        200:
+          description: Return the token, user object, status and message
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              user:
+                $ref: '#/definitions/User'
+              token:
+                type: "string"
+              message:
+                type: "string"
+        400:
+          description: Unauthorized
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              error:
+                type: "object"
+  
+  /users:
+    put:
+      security:
+        - Bearer: []
+      description: Update Current User
+      operationId: UserUpdate
+      parameters: 
+        - name: Authorization
+          type: string
+          in: header
+          description: User token provided
+          required: true
+        - name: firstName
+          in: query
+          description: User First Name
+          type: string
+        - name: lastName
+          in: query
+          description: User Last Name
+          type: string
+        - name: phone
+          in: query
+          description: User last name
+          type: string
+          required: false
+      responses:
+        200:
+          description: Return User Updated status
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              user:
+                $ref: "#/definitions/User"
+              message:
+                type: "string"
+        400:
+          description: Invalid input
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              error:
+                type: "object"
+              message:
+                type: "string"
+
+  /users/current:
+    get:
+      security:
+        - Bearer: []
+      description: Get info of the current logged user
+      operationId: UserCurrent
+      parameters: 
+        - name: Authorization
+          type: string
+          in: header
+          description: User token provided
+          required: true
+      responses:
+        200:
+          description: Return User Updated status
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              user:
+                $ref: "#/definitions/User"
+              message:
+                type: "string"
+        400:
+          description: Invalid input
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              error:
+                type: "object"
+              message:
+                type: "string"
+                
+  /users/change-password:
+    post:
+      security:
+        - Bearer: []
+      description: User can change the current password with this endpoint (authentication required)
+      operationId: UserChangePass
+      parameters:
+        - name: Authorization
+          type: string
+          in: header
+          description: User token provided
+          required: true
+        - name: currentPassword
+          in: query
+          description: User Current Password
+          type: string
+          required: true
+        - name: newPassword
+          in: query
+          description: New User Password
+          type: string
+          required: true
+      responses:
+        200:
+          description: Return the user, token and message when user change the password successfully
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              user:
+                $ref: '#/definitions/User'
+              token:
+                type: "string"
+              message:
+                type: "string"
+        400:
+          description: Invalid input
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              error:
+                type: "object"
+              message:
+                type: "string"
+          
+  /users/retrieve-password-step-one:
+    post:
+      description: If User forgot the password he can retrieve the password with this endpoint, this will send an email to the user to set a new password
+      operationId: UserRetrievePass
+      parameters:
+        - name: email
+          in: query
+          description: User Current Password
+          type: string
+          required: true
+      responses:
+        200:
+          description: Return info if user was fount and send an email to retrieve the password
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              message:
+                type: "string"
+        400:
+          description: Invalid input
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              error:
+                type: "object"
+              message:
+                type: "string"
+          
+  /users/retrieve-password-step-two:
+    post:
+      description: This endpoint is usefull, we can use this as the second part of the last step, or we can use is to set the password by first time, when an Admin creates a new User to the customer.
+      operationId: UserRetrievePassTwo
+      parameters:
+        - name: token
+          in: query
+          description: User Token generated by the email
+          type: string
+          required: true
+        - name: newPassword
+          in: query
+          description: User New password to be created
+          type: string
+          required: true
+      responses:
+        200:
+          description: Shows user, token and status if the form is valid
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              message:
+                type: "string"
+              user:
+                $ref: '#/definitions/User'
+              token:
+                type: "string"
+        400:
+          description: Invalid input
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              error:
+                type: "object"
+              message:
+                type: "string"
+          
+  /users/create:
+    post:
+      security:
+        - Bearer: []
+      description: As Admin of Customer or as System Admin. Create User for customers, this will send an email to the user for create the new password. IMPORTANT NOTE the endpoint for the user created to set the password for the first time is the same than the step two of retrieve password (/users/retrieve-password-step-two)
+      operationId: UserCreate
+      parameters: 
+        - name: Authorization
+          type: string
+          in: header
+          description: User token provided
+          required: true
+        - name: email
+          in: query
+          description: User email
+          type: string
+          required: true
+        - name: firstName
+          in: query
+          description: User first name 
+          type: string
+          required: true
+        - name: lastName
+          in: query
+          description: User last name
+          type: string
+          required: true
+        - name: phone
+          in: query
+          description: User last name
+          type: string
+          required: false
+        - name: customerId
+          in: query
+          description: Id of the customer to be user associated (not required)
+          type: string
+        - name: roles
+          in: query
+          description: (Only if is System Admin), can pass the param role of the allowed roles ['SYS_ADMIN', 'ADMIN', 'USER']
+          type: string
+      responses:
+        200:
+          description: Return info if user is created successfully
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              token:
+                type: "string"
+              user:
+                $ref: '#/definitions/User'
+              
+        400:
+          description: Invalid input
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              error:
+                type: "object"
+              message:
+                type: "string"
+  
+  /customers:
+    post:
+      security:
+        - Bearer: []
+      description: Create customer/company/module by POST (Logged as Admin User)
+      operationId: CustomerCreate
+      parameters: 
+        - name: Authorization
+          type: string
+          in: header
+          description: User token provided
+          required: true
+        - name: name
+          in: query
+          description: Customer Name
+          type: string
+          required: true
+        - name: accountName
+          in: query
+          description: Customer Name
+          type: string
+          required: true
+        - name: accountType
+          in: query
+          description: Customer Name
+          type: string
+          required: true
+        - name: website
+          in: query
+          description: Customer Name
+          type: string
+          required: true
+        - name: billingAddress
+          in: query
+          description: Customer Name
+          type: string
+          required: true
+        - name: phoneNumber
+          in: query
+          description: Customer Name
+          type: string
+          required: true
+        - name: installationAddress
+          in: query
+          description: Customer Name
+          type: string
+          required: true
+        - name: annualSalesRevenue
+          in: query
+          description: Customer Name
+          type: string
+          required: true
+        - name: annualVolume
+          in: query
+          description: Customer Name
+          type: string
+          required: true
+        - name: annualVolumeUnit
+          in: query
+          description: Customer Name
+          type: string
+          required: true
+        - name: shippingAddress
+          in: query
+          description: Customer Name
+          type: string
+          required: true
+        - name: email
+          in: query
+          description: Customer Name
+          type: string
+          required: true
+        - name: accountSource
+          in: query
+          description: Customer Name
+          type: string
+          required: true
+        - name: industryVertical
+          in: query
+          description: Customer Name
+          type: string
+          required: true
+        
+      responses:
+        201:
+          description: Return created customer object
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              customer:
+                $ref: '#/definitions/Customer'
+              
+        400:
+          description: Invalid input
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              error:
+                type: "object"
+              message:
+                type: "string"
+    get:
+      security:
+        - Bearer: []
+      description: Get Customer List of admin loggedin
+      operationId: CustomerList
+      parameters: 
+        - name: Authorization
+          type: string
+          in: header
+          description: User token provided
+          required: true
+      responses:
+        200:
+          description: Return created customer object
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              customers:
+                type: "array"
+                items:
+                  $ref: "#/definitions/Customer"
+              
+        400:
+          description: Invalid input
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              error:
+                type: "object"
+              message:
+                type: "string"
+
+                
+  /customers/add-doc/{customerId}:
+    post:
+      security:
+        - Bearer: []
+      description: Add document id to the customer. This endpoint is used by Seach Manager
+      operationId: CustomerAddDoc
+      parameters: 
+        - name: Authorization
+          type: string
+          in: header
+          description: User token provided
+          required: true
+        - name: customerId
+          in: path
+          description: ID of Customer
+          required: true
+          type: string
+        - name: docId
+          in: query
+          description: Document Id
+          type: string
+          required: true
+      responses:
+        200:
+          description: Return created customer object
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              customer:
+                $ref: '#/definitions/Customer'
+              
+        400:
+          description: Invalid input
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              error:
+                type: "object"
+              message:
+                type: "string"
+                
+  /customers/{customerId}:
+    get:
+      security:
+        - Bearer: []
+      description: Get Customer List of admin loggedin
+      operationId: CustomerGet
+      parameters: 
+        - name: Authorization
+          type: string
+          in: header
+          description: User token provided
+          required: true
+        - name: customerId
+          in: path
+          description: ID of Customer
+          required: true
+          type: string
+      responses:
+        200:
+          description: Return created customer object
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              customer:
+                $ref: "#/definitions/Customer"
+        400:
+          description: Invalid input
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              error:
+                type: "object"
+              message:
+                type: "string"
+    put:
+      security:
+        - Bearer: []
+      description: Update Customer
+      operationId: CustomerUpdate
+      parameters: 
+        - name: Authorization
+          type: string
+          in: header
+          description: User token provided
+          required: true
+        - name: customerId
+          in: path
+          description: ID of Customer
+          required: true
+          type: string
+        - name: name
+          in: query
+          description: Customer Name
+          type: string
+        - name: accountName
+          in: query
+          description: Customer Name
+          type: string
+        - name: accountType
+          in: query
+          description: Customer Name
+          type: string
+        - name: website
+          in: query
+          description: Customer Name
+          type: string
+        - name: billingAddress
+          in: query
+          description: Customer Name
+          type: string
+        - name: phoneNumber
+          in: query
+          description: Customer Name
+          type: string
+        - name: installationAddress
+          in: query
+          description: Customer Name
+          type: string
+        - name: annualSalesRevenue
+          in: query
+          description: Customer Name
+          type: string
+        - name: annualVolume
+          in: query
+          description: Customer Name
+          type: string
+        - name: annualVolumeUnit
+          in: query
+          description: Customer Name
+          type: string
+        - name: shippingAddress
+          in: query
+          description: Customer Name
+          type: string
+        - name: email
+          in: query
+          description: Customer Name
+          type: string
+        - name: accountSource
+          in: query
+          description: Customer Name
+          type: string
+        - name: industryVertical
+          in: query
+          description: Customer Name
+          type: string
+      responses:
+        200:
+          description: Return created customer object
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              customer:
+                $ref: "#/definitions/Customer"
+        400:
+          description: Invalid input
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              error:
+                type: "object"
+              message:
+                type: "string"
+    delete:
+      security:
+        - Bearer: []
+      description: Delete Customer
+      operationId: CustomerDelete
+      parameters: 
+        - name: Authorization
+          type: string
+          in: header
+          description: User token provided
+          required: true
+        - name: customerId
+          in: path
+          description: ID of Customer
+          required: true
+          type: string
+      responses:
+        201:
+          description: Return created customer object
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              customer:
+                $ref: '#/definitions/Customer'
+              
+        400:
+          description: Invalid input
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              error:
+                type: "object"
+              message:
+                type: "string"
+  /customers/{customerId}/revoke-user:
+    post:
+      security:
+        - Bearer: []
+      description: Revoke user from customer
+      operationId: CustomerRevokeUser
+      parameters: 
+        - name: Authorization
+          type: string
+          in: header
+          description: User token provided
+          required: true
+        - name: customerId
+          in: path
+          description: ID of Customer
+          required: true
+          type: string
+        - name: userId
+          in: query
+          description: Id of the user to be revoked to the Customer access
+          required: true
+          type: string
+          
+      responses:
+        200:
+          description: Return created customer object
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              customer:
+                $ref: "#/definitions/Customer"
+        400:
+          description: Invalid input
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              error:
+                type: "object"
+              message:
+                type: "string"
+  /workorders:
+    post:
+      security:
+        - Bearer: []
+      description: Create a new Workorder for USER rol user
+      operationId: WorkorderCreate
+      parameters: 
+        - name: Authorization
+          type: string
+          in: header
+          description: User token provided
+          required: true
+        - name: customerId
+          in: query
+          description: Customer ID
+          type: string
+        - name: work
+          in: query
+          description: Work
+          type: string
+        - name: project
+          in: query
+          description: Project
+          type: string
+        - name: projectManager
+          in: query
+          description: Project Manager
+          type: string
+        - name: labManager
+          in: query
+          description: Lab Manager
+          type: string
+        - name: LabManagerEMail
+          in: query
+          description: Lab Manager Email
+          type: string
+        - name: status
+          in: query
+          description: Status
+          type: string
+        - name: statusDate
+          in: query
+          description: Status Date
+          type: string
+        - name: due
+          in: query
+          description: due
+          type: string
+        - name: tat
+          in: query
+          description: tat
+          type: string
+        - name: temp
+          in: query
+          description: temp
+          type: string
+        - name: containers
+          in: query
+          description: containers
+          type: string
+        - name: samples
+          in: query
+          description: samples
+          type: string
+        - name: seals
+          in: query
+          description: seals
+          type: string
+        - name: labels
+          in: query
+          description: labels
+          type: string
+        - name: onIce
+          in: query
+          description: onIce
+          type: string
+        - name: samplesData
+          in: query
+          description: samplesData
+          type: string
+        - name: sampleName
+          in: query
+          description: sampleName
+          type: string
+      responses:
+        200:
+          description: Return Workorder Updated status
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              wororder:
+                type: "array"
+                items:
+                  $ref: "#/definitions/Workorder"
+              message:
+                type: "string"
+        400:
+          description: Invalid input
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              error:
+                type: "object"
+              message:
+                type: "string"
+
+    get:
+      security:
+        - Bearer: []
+      description: Get List of workorders
+      operationId: WorkorderList
+      parameters: 
+        - name: Authorization
+          type: string
+          in: header
+          description: User token provided
+          required: true
+      responses:
+        200:
+          description: Return User Updated status
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              workorders:
+                type: "array"
+                items:
+                  $ref: "#/definitions/Workorder"
+              message:
+                type: "string"
+        400:
+          description: Invalid input
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              error:
+                type: "object"
+              message:
+                type: "string"
+
+  /workorder/{workorderId}:
+    get:
+      security:
+        - Bearer: []
+      description: Get workorder from any user logged
+      operationId: WorkorderGet
+      parameters: 
+        - name: Authorization
+          type: string
+          in: header
+          description: User token provided
+          required: true
+        - name: workorderId
+          in: path
+          description: ID of Workorder
+          required: true
+          type: string
+      responses:
+        200:
+          description: Return Product Details
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              product:
+                $ref: "#/definitions/Workorder"
+              message:
+                type: "string"
+        400:
+          description: Invalid input
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              error:
+                type: "object"
+              message:
+                type: "string"
+
+  /products:
+    post:
+      security:
+        - Bearer: []
+      description: Create a new Product from SYS_ADMIN user
+      operationId: ProductCreate
+      parameters: 
+        - name: Authorization
+          type: string
+          in: header
+          description: User token provided
+          required: true
+        - name: customerId
+          in: query
+          description: Customer ID
+          type: string
+        - name: description
+          in: query
+          description: Product Description
+          type: string
+        - name: type
+          in: query
+          description: Product Type
+          type: string
+        - name: productType
+          in: query
+          description: Product Type
+          type: string
+        - name: name
+          in: query
+          description: Product Name
+          type: string
+        - name: sku
+          in: query
+          description: Product sku
+          type: string
+      responses:
+        201:
+          description: Return User Updated status
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              product:
+                $ref: "#/definitions/Product"
+              message:
+                type: "string"
+        400:
+          description: Invalid input
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              error:
+                type: "object"
+              message:
+                type: "string"
+    get:
+      security:
+        - Bearer: []
+      description: Get List of products from SYS_ADMIN user
+      operationId: ProductList
+      parameters: 
+        - name: Authorization
+          type: string
+          in: header
+          description: User token provided
+          required: true
+      responses:
+        200:
+          description: Return User Updated status
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              products:
+                type: "array"
+                items:
+                  $ref: "#/definitions/Product"
+              message:
+                type: "string"
+        400:
+          description: Invalid input
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              error:
+                type: "object"
+              message:
+                type: "string"
+
+  /products/{productId}:
+    get:
+      security:
+        - Bearer: []
+      description: Get Product from any user logged
+      operationId: ProductGet
+      parameters: 
+        - name: Authorization
+          type: string
+          in: header
+          description: User token provided
+          required: true
+        - name: productId
+          in: path
+          description: ID of Product
+          required: true
+          type: string
+      responses:
+        200:
+          description: Return Product Details
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              product:
+                $ref: "#/definitions/Product"
+              message:
+                type: "string"
+        400:
+          description: Invalid input
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              error:
+                type: "object"
+              message:
+                type: "string"
+    put:
+      security:
+        - Bearer: []
+      description: Update Product from SYS_ADMIN user
+      operationId: ProductUpdate
+      parameters: 
+        - name: Authorization
+          type: string
+          in: header
+          description: User token provided
+          required: true
+        - name: productId
+          in: path
+          description: ID of Product
+          required: true
+          type: string
+        - name: customerId
+          in: query
+          description: ID of Customer
+          required: true
+          type: string
+        - name: description
+          in: query
+          description: Product Description
+          type: string
+        - name: type
+          in: query
+          description: Product Type
+          type: string
+        - name: name
+          in: query
+          description: Product Name
+          type: string
+        - name: sku
+          in: query
+          description: Product sku
+          type: string
+      responses:
+        200:
+          description: Return Product Updated
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              product:
+                $ref: "#/definitions/Product"
+              message:
+                type: "string"
+        400:
+          description: Invalid input
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              error:
+                type: "object"
+              message:
+                type: "string"
+    delete:
+      security:
+        - Bearer: []
+      description: Delete Product from SYS_ADMIN user
+      operationId: ProductDelete
+      parameters: 
+        - name: Authorization
+          type: string
+          in: header
+          description: User token provided
+          required: true
+        - name: productId
+          in: path
+          description: ID of Product
+          required: true
+          type: string
+        - name: customerId
+          in: query
+          description: ID of Customer
+          required: true
+          type: string
+      responses:
+        200:
+          description: Return User Deleted status
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              product:
+                $ref: "#/definitions/Product"
+              message:
+                type: "string"
+        400:
+          description: Invalid input
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              error:
+                type: "object"
+              message:
+                type: "string"
+                
+  /inventory:
+    get:
+      security:
+        - Bearer: []
+      description: Get Products list of Inventory
+      operationId: InventoryList
+      parameters: 
+        - name: Authorization
+          type: string
+          in: header
+          description: User token provided
+          required: true
+        - name: customerId
+          in: query
+          description: ID of Customer to extract the inventory
+          required: true
+          type: string
+      responses:
+        200:
+          description: Return Product Details
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              inventories:
+                type: "array"
+                items:
+                  $ref: "#/definitions/Inventory"
+              message:
+                type: "string"
+        400:
+          description: Invalid input
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              error:
+                type: "object"
+              message:
+                type: "string"
+    post:
+      security:
+        - Bearer: []
+      description: Create a new Inventory
+      operationId: InventoryCreate
+      parameters: 
+        - name: Authorization
+          type: string
+          in: header
+          description: User token provided
+          required: true
+        - name: productId
+          in: query
+          description: ID of Product
+          required: true
+          type: string
+        - name: customerId
+          in: query
+          description: ID of Customer
+          required: true
+          type: string
+        - name: description
+          in: query
+          description: Description of the product in the Inventory
+          type: string
+        - name: stock
+          in: query
+          description: stock of the product in the iinventory
+          type: string
+        - name: services
+          in: query
+          description: Services for the inventory
+          type: array
+          items:
+            type: 'string'
+        - name: testingStatus
+          in: query
+          description: testingStatus for the inventory
+          type: array
+          items:
+            type: 'string'
+        - name: location
+          in: query
+          description: Location of the products in the inventory
+          type: string
+        - name: dateArrival
+          in: query
+          description: Date when the product arrival (sample 'Thu Jun 21 2018 22:44:20 GMT-0400 (-04)')
+          type: string
+        - name: dateDeparture
+          in: query
+          description: Date when the product departure (sample 'Thu Jun 21 2018 22:44:20 GMT-0400 (-04)')
+          type: string
+      responses:
+        201:
+          description: Return Product Details
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              inventory:
+                $ref: "#/definitions/Inventory"
+              message:
+                type: "string"
+        400:
+          description: Invalid input
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              error:
+                type: "object"
+              message:
+                type: "string"
+
+  /inventory/{inventoryId}:
+    get:
+      security:
+        - Bearer: []
+      description: Get Info of Inventory
+      operationId: InventoryGet
+      parameters: 
+        - name: Authorization
+          type: string
+          in: header
+          description: User token provided
+          required: true
+        - name: inventoryId
+          in: path
+          description: ID of Inventory
+          required: true
+          type: string
+      responses:
+        200:
+          description: Return Inventory Details
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              inventory:
+                $ref: "#/definitions/Inventory"
+              message:
+                type: "string"
+        400:
+          description: Invalid input
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              error:
+                type: "object"
+              message:
+                type: "string"
+    put:
+      security:
+        - Bearer: []
+      description: Update Product of Inventory
+      operationId: InventoryUpdate
+      parameters: 
+        - name: Authorization
+          type: string
+          in: header
+          description: User token provided
+          required: true
+        - name: inventoryId
+          in: path
+          description: ID of Inventory
+          required: true
+          type: string
+        - name: customerId
+          in: query
+          description: ID of customer associated
+          required: true
+          type: string
+        - name: description
+          in: query
+          description: Description of the product in the Inventory
+          type: string
+        - name: stock
+          in: query
+          description: stock of the product in the iinventory
+          type: string
+        - name: services
+          in: query
+          description: Services for the inventory
+          type: array
+          items:
+            type: 'string'
+        - name: testingStatus
+          in: query
+          description: testingStatus for the inventory
+          type: string
+        - name: location
+          in: query
+          description: Location of the products in the inventory
+          type: string
+        - name: dateArrival
+          in: query
+          description: Date when the product arrival (sample 'Thu Jun 21 2018 22:44:20 GMT-0400 (-04)')
+          type: string
+        - name: dateDeparture
+          in: query
+          description: Date when the product departure (sample 'Thu Jun 21 2018 22:44:20 GMT-0400 (-04)')
+          type: string
+      responses:
+        200:
+          description: Return Product Details
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              inventory:
+                $ref: "#/definitions/Inventory"
+              message:
+                type: "string"
+        400:
+          description: Invalid input
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              error:
+                type: "object"
+              message:
+                type: "string"
+    delete:
+      security:
+        - Bearer: []
+      description: Delete Product of Inventory
+      operationId: InventoryDelete
+      parameters: 
+        - name: Authorization
+          type: string
+          in: header
+          description: User token provided
+          required: true
+        - name: inventoryId
+          in: path
+          description: ID of Inventory
+          required: true
+          type: string
+        - name: customerId
+          in: query
+          description: ID of customer associated
+          required: true
+          type: string
+      responses:
+        200:
+          description: Return Product Details
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              message:
+                type: "string"
+        400:
+          description: Invalid input
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              error:
+                type: "object"
+              message:
+                type: "string"
+                
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+
+definitions:
+  User:
+    type: "object"
+    properties:
+      _id:
+        type: "string"
+      firstName:
+        type: "string"
+      lastName:
+        type: "string"
+      email:
+        type: "string"
+      password:
+        type: "string"
+      active:
+        type: "boolean"
+      company_account:
+        type: "string"
+      roles:
+        type: "array"
+        items:
+          type: "string"
+      createdAt:
+        type: "string"
+      updatedAt:
+        type: "string"
+    xml:
+      name: "User"
+  Document:
+    type: "object"
+    properties:
+      _id:
+        type: "string"
+      freeText:
+        type: "string"
+      documentPath:
+        type: "string"
+      esId:
+        type: "string"
+      createdAt:
+        type: "string"
+      updatedAt:
+        type: "string"
+    xml:
+      name: "Document"
+  Customer:
+    type: "object"
+    properties:
+      _id:
+        type: "string"
+      admin:
+        type: "string"
+      name:
+        type: "string"
+      users:
+        type: "array"
+        items:
+          $ref: "#/definitions/User"
+      documents:
+        type: "array"
+        items:
+          $ref: "#/definitions/Document"
+      accountName:
+        type: "string"
+      accountType:
+        type: "string"
+      website:
+        type: "string"
+      billingAddress:
+        type: "string"
+      phoneNumber:
+        type: "string"
+      installationAddress:
+        type: "string"
+      annualSalesRevenue:
+        type: "string"
+      annualVolume:
+        type: "object"
+        properties:
+          $numberDecimal: 
+            type: "string"
+      annualVolumeUnit:
+        type: "string"
+      shippingAddress:
+        type: "string"
+      email:
+        type: "string"
+      accountSource:
+        type: "string"
+      industryVertical:
+        type: "string"
+      createdAt:
+        type: "string"
+      updatedAt:
+        type: "string"
+    xml:
+      name: "Customer"
+  
+  Product:
+    type: "object"
+    properties:
+      _id:
+        type: "string"
+      sku:
+        type: "string"
+      description:
+        type: "string"
+      type:
+        type: "string"
+      name:
+        type: "string"
+      customer:
+        type: "string"
+      createdAt:
+        type: "string"
+      updatedAt:
+        type: "string"
+    xml:
+      name: "Product"
+
+  Workorder:
+    type: "object"
+    properties:
+      _id:
+        type: "string"
+      workorderId:
+        type: "string"
+      description:
+        type: "string"
+      type:
+        type: "string"
+      name:
+        type: "string"
+      customer:
+        type: "string"
+      createdAt:
+        type: "string"
+      updatedAt:
+        type: "string"
+    xml:
+      name: "Product"
+      
+  Inventory:
+    type: "object"
+    properties:
+      _id:
+        type: "string"
+      stock:
+        type: "string"
+      services:
+        type: "array"
+        items:
+          type: 'string'
+      testingStatus:
+        type: 'string'
+      location:
+        type: "string"
+      product:
+        type: "object"
+      customer:
+        type: "object"
+      dateArrival:
+        type: "string"
+      dateDeparture:
+        type: "string"
+      createdAt:
+        type: "string"
+      updatedAt:
+        type: "string"
+    xml:
+      name: "Inventory"

@@ -1,0 +1,22 @@
+{
+  "name": "paclab-usermanager-api",
+  "version": "1.0.0",
+  "description": "This is the documentation of PacLab Backend for User Manager  [http://swagger.io](http://swagger.io) or on  [irc.freenode.net, #swagger](http://swagger.io/irc/).  Created by @pdonaire1. ",
+  "main": "index.js",
+  "scripts": {
+    "prestart": "npm install",
+    "start": "node index.js",
+    "edit": "swagger project edit"
+  },
+  "keywords": [
+    "swagger"
+  ],
+  "license": "Unlicense",
+  "private": true,
+  "dependencies": {
+    "connect": "^3.2.0",
+    "dotenv": "^6.0.0",
+    "js-yaml": "^3.3.0",
+    "swagger-tools": "0.10.1"
+  }
+}

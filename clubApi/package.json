@@ -1,0 +1,45 @@
+{
+  "name": "club-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "NODE_ENV=test nodemon server.js",
+    "run": "node server.js",
+    "test": "NODE_ENV=test mocha test --recursive --watch --timeout 10000 tests/",
+    "search-test-server": "NODE_ENV_SERVER=search-test NODE_ENV=test nodemon server",
+    "parse-chromatogram": "node scripts/parse-chromatogram.js",
+    "documentation": "swagger project edit ../UserManager-swagger/"
+  },
+  "keywords": [
+    "club-api",
+    "security"
+  ],
+  "author": "andres.dicamillo@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.6.1",
+    "bcrypt": "^2.0.1",
+    "bluebird": "^3.5.1",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "dotenv": "^5.0.1",
+    "express": "^4.16.3",
+    "express-jwt": "^5.3.1",
+    "jsonwebtoken": "^8.2.1",
+    "mongoose": "^5.1.1",
+    "n-readlines": "^1.0.0",
+    "nodemailer": "^4.6.5",
+    "nodemon": "^1.17.5",
+    "request": "^2.58.0"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-http": "^4.0.0",
+    "jest": "^23.4.1",
+    "mocha": "^2.2.5",
+    "mockgoose": "^7.3.5",
+    "node-gyp": "^3.7.0",
+    "z-schema": "^3.12.0"
+  }
+}

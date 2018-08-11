@@ -1,0 +1,11 @@
+version: '3.1'
+
+services:
+  pl-usermanager:
+    image: ${ECR_NAME}/${ECR_IMAGE_NAME}:${ENV}-latest
+    network_mode: "host"
+    restart: always
+    ports:
+      - ${PORT}:${PORT}
+    expose:
+      - ${PORT}

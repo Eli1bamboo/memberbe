@@ -1,0 +1,14 @@
+version: '3.1'
+
+services:
+
+  pl-usermanager-swagger:
+    image: ${ECR_NAME}/${ECR_IMAGE_NAME}:${ENV}-latest
+    network_mode: "host"
+    restart: always
+    ports:
+      - ${PORT}:${PORT}
+    expose:
+      - ${PORT}
+    environment:
+      NODE_ENV: ${NODE_ENV}
