@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "NODE_ENV=test nodemon server.js",
+    "start": "NODE_ENV=development nodemon server.js",
     "run": "node server.js",
     "test": "NODE_ENV=test mocha test --recursive --watch --timeout 10000 tests/",
     "search-test-server": "NODE_ENV_SERVER=search-test NODE_ENV=test nodemon server",
