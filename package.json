@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "init 2 nodes"
+    "api": "npm run start --prefix clubApi",
+    "backend": "npm run start --prefix clients/clubBackend",
+    "start": "concurrently 'npm run api' 'npm run backend'"
   },
   "keywords": [
     "swagger"
@@ -11,6 +13,7 @@
   "license": "Unlicense",
   "private": true,
   "dependencies": {
+    "concurrently": "^3.5.1",
     "connect": "3.2.0",
     "dotenv": "6.0.0",
     "eslint": "4.18.2",
