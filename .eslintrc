@@ -1,24 +1,37 @@
 {
-  "env": {
+    "extends": "airbnb",
+  
+    "rules": {
+      ////////// Possible Errors //////////
+  
+      "comma-dangle": 0,             // disallow trailing commas in object literals
+      "no-underscore-dangle": 0,     // disallow dangling underscores in identifiers
+      "semi": 0,                      // require or disallow use of semicolons instead of ASI
+      "prefer-destructuring": 0,      // disable object destructuring
+      "react/no-unknown-property": 0,  // disable error when class is used instead of className
+      "react/prefer-stateless-function": 0, // disable pure-stateless function
+      "prefer-arrow-callback": 0,       //disable arrow functions
+      "func-names": 0,                  //disable function names
+      "jsx-a11y/label-has-for": [ 2, {
+              "components": [ "Label" ],
+              "required": {
+                  "some": [ "nesting", "id" ]
+              },
+              "allowChildren": false
+          }],                               // disable need for label to nest input inside it
+      "click-events-have-key-events": 0,    // disable need to accompany a click event with a key event
+      "no-static-element-interactions": 0,  // disable requirement of static HTML elements to not have semantic meaning
+      "class-methods-use-this": 0, // disable requirement of this to be used by class method
+    },
+  
+    "globals": {
+      "window": true
+    },
+    "env": {
       "browser": true,
       "commonjs": true,
       "es6": true,
-      "node": true
-  },
-  "extends": "eslint:recommended",
-  "parserOptions": {
-      "ecmaFeatures": {
-          "experimentalObjectRestSpread": true,
-          "jsx": true
-      },
-      "sourceType": "module"
-  },
-  "plugins": ["react"],
-  "rules": {
-      "indent": [1,2],
-      "linebreak-style": [2,"unix"],
-      "quotes": [1,"double"],
-      "semi": [1,"never"]
+      "jquery": true
+    }
   }
-}
   
