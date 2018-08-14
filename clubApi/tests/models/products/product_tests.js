@@ -1,29 +1,29 @@
 /* by: @andresdicamillo
  * mocha tests --recursive --watch
  */
-process.env.NODE_ENV = "test"
+process.env.NODE_ENV = 'test';
 // var chai = require('chai');
-var UserModel = require("../../../models/user-model")
+var UserModel = require('../../../models/user-model');
 // var CustomerModel = require('../../../models/customer-model');
-let chaiHttp = require("chai-http")
-let server = require("../../../server")
-var http = require("http")
-var assert = require("assert")
+let chaiHttp = require('chai-http');
+let server = require('../../../server');
+var http = require('http');
+var assert = require('assert');
 // let should = chai.should();
 // chai.use(chaiHttp);
-const { PRODUCT_TYPE_OPTIONS } = require("../../../constants")
-const productFactory = require("../../factory/product")
-var user, token
+const { PRODUCT_TYPE_OPTIONS } = require('../../../constants');
+const productFactory = require('../../factory/product');
+var user, token;
 
-describe("MODEL Product Create", function (done) {
+describe('MODEL Product Create', function (done) {
   before((done) => {
-    done()
-  })
+    done();
+  });
   after((done) => {
     productFactory.removeAll().then(() =>
       productFactory.removeAll().then(() => done())
     )
-  })
+  });
   // it('should a valid product', function (done) {
   //   var data = {
   //     type: PRODUCT_TYPE_OPTIONS[0],
@@ -38,16 +38,16 @@ describe("MODEL Product Create", function (done) {
   //     done();
   //   });
   // });
-  it("should create more than 2 valid products", function (done) {
+  it('should create more than 2 valid products', function (done) {
     productFactory.create().then((p1) => {
       productFactory.create().then((p2) => {
-        assert.notEqual(p2.sku, p1.sku)
+        assert.notEqual(p2.sku, p1.sku);
         productFactory.create().then((p3) => {
-          assert.notEqual(p3.sku, p2.sku)
-          done()
-        })
-      })
-    })
-  })
+          assert.notEqual(p3.sku, p2.sku);
+          done();
+        });
+      });
+    });
+  });
 
-})
+});
