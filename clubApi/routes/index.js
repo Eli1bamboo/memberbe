@@ -4,7 +4,8 @@ const productRoutes = require('./product-routes');
 const memberRoutes = require('./member-routes');
 const user = require('./user-routes');
 const admin = require('./admin-routes');
-const UserManager = require('../services/user-manager');
+const Um = require('../services/user-manager');
+const UserManager = new Um()
 const AccessControl = require('../utils/access-control');
 
 module.exports = function (app) {

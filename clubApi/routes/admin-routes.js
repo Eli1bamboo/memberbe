@@ -1,9 +1,10 @@
 
 const Router = require('express').Router
 const router = new Router()
-const UserManager = require('../services/admin-manager');
+const Am = require('../services/admin-manager');
+const AdminManager = new Am()
 const Authentication = require('../controllers/admins/authentication');
-const UserController = require('../controllers/admins/user-controller');
+const UserController = require('../controllers/admins/admin-controller');
 const SECRET = Buffer.from(process.env.SHARED_SECRET, 'base64');
 const AccessControl = require('../utils/access-control');
 const { SYS_ADMIN } = require('../constants');
@@ -34,7 +35,7 @@ module.exports = function (app) {
       if (process.env.NODE_ENV === 'test') {
         data.passwordHash = '1234'
       }
-      const user = await UserManager.create(data, true);
+      const user = await AdminManager.create(data, true);
       if (user._id) {
         return res.status(200).send({status: 'created', message: 'User Created successfully, review your email'})
       }

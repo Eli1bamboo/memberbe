@@ -1,7 +1,9 @@
 
 
-const UserManager = require('../../services/user-manager');
-const UserModel = require('../../models/user-model');
+const Um = require('../../services/user-manager');
+const UserManager = new Um()
+const UserModelClass = require('../../models/user-model');
+const UserModel = new UserModelClass()
 const AccessControl = require('../../utils/access-control');
 
 class UserController {
@@ -23,7 +25,6 @@ class UserController {
         user,
       });
     } catch (e) {
-      console.log(e);
       res.status(400).send({
         status: 'error',
         error: e
@@ -116,4 +117,4 @@ class UserController {
   }
 }
 
-module.exports = new UserController();
+module.exports = UserController

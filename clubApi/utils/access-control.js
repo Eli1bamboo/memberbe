@@ -1,4 +1,5 @@
-const UserManager = require('../services/user-manager');
+const um = require('../services/user-manager');
+const UserManager = new um()
 const { ADMIN, SYS_ADMIN, USER } = require('../constants');
 
 class AccessControl {
