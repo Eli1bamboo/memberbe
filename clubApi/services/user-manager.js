@@ -1,6 +1,6 @@
 
 
-const UserModel = require('../models/admin-model');
+const UserModel = require('../models/user-model');
 const { sendMail } = require('../utils/mailer');
 const bcrypt = require('bcrypt');
 // var jwt = require('express-jwt');
@@ -341,4 +341,4 @@ class UserManager {
 }
 
 // module.exports = new UserManager();
-module.exports = new UserManager();
+module.exports = UserManager

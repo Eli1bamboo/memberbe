@@ -1,9 +1,12 @@
 
 const Router = require('express').Router
 const router = new Router()
-const UserManager = require('../services/user-manager');
-const Authentication = require('../controllers/users/authentication');
-const UserController = require('../controllers/users/user-controller');
+const Um = require('../services/user-manager');
+const UserManager = new Um()
+const AuthenticationController = require('../controllers/users/authentication');
+const Authentication = new AuthenticationController()
+const Uc = require('../controllers/users/user-controller');
+const UserController = new Uc()
 const SECRET = Buffer.from(process.env.SHARED_SECRET, 'base64');
 const AccessControl = require('../utils/access-control');
 const { SYS_ADMIN } = require('../constants');

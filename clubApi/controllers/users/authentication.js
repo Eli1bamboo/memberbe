@@ -1,8 +1,9 @@
 
 
-const UserManager = require('../../services/user-manager');
+const Um = require('../../services/user-manager');
+const UserManager = new Um()
 
-class UserController {
+class AuthenticationController {
   async login(req, res) {
     try {
       const token = await UserManager.login(req.param('email'), req.param('password'))
@@ -99,4 +100,4 @@ class UserController {
   }
 }
 
-module.exports = new UserController();
+module.exports = AuthenticationController
