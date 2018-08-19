@@ -1,7 +1,7 @@
 'use strict';
 
 const MemberModel = require('../models/member-model');
-const UserModel = require('../models/user-model')
+const UserModel = require('../models/admin-model')
 const Promise = require('bluebird');
 var bcrypt = require('bcrypt');
 // var jwt = require('express-jwt');

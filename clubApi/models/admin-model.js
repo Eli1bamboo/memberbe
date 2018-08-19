@@ -3,12 +3,12 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
-const MemberSchema = new Schema({
+const UserSchema = new Schema({
 
 }, { discriminatorKey: 'kind' })
 
 const UserModel = require('./user-model')
 
-const MemberModel = UserModel.discriminator('Member', MemberSchema)
+const AdminModel = UserModel.discriminator('Admin', UserSchema)
 
-module.exports = MemberModel
+module.exports = AdminModel
