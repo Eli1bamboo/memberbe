@@ -19,6 +19,45 @@ schemes:
   - http
 
 paths:
+  /admins/login:
+    post:
+      description: User Login
+      operationId: UserLogin
+      parameters:
+        - name: email
+          type: string
+          in: query
+          description: Email of the user to login
+          required: true
+        - name: password
+          type: string
+          in: query
+          description: Password of the user to login
+          required: true
+      responses:
+        200:
+          description: Return the token, user object, status and message
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              user:
+                $ref: '#/definitions/User'
+              token:
+                type: "string"
+              message:
+                type: "string"
+        400:
+          description: Unauthorized
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              error:
+                type: "object"
+  
   /users/login:
     post:
       description: User Login

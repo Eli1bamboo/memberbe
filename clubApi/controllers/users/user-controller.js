@@ -1,9 +1,11 @@
-
-
 const Um = require('../../services/user-manager');
+
 const UserManager = new Um()
+
 const UserModelClass = require('../../models/user-model');
+
 const UserModel = new UserModelClass()
+
 const AccessControl = require('../../utils/access-control');
 
 class UserController {

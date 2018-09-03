@@ -4,7 +4,6 @@ const AdminModel = require('../models/admin-model')
 const UserManager = require('./user-manager')
 
 class AdminManager extends UserManager {
-
   async create(data, canAssignRole = false) {
     /* Create Customer from Admin or SysAdmin user and send pasword reset email
          * Only if user is **SysAdmin** can set by param the user role! */
@@ -42,7 +41,6 @@ class AdminManager extends UserManager {
       return { error: err, message: 'Problem in backend, please try again later' };
     }
   }
-
 }
 
 // module.exports = new UserManager();
