@@ -1,5 +1,6 @@
 import {
   drawerWidth,
+  drawerBGColor,
   transition,
   boxShadow,
   defaultFont,
@@ -21,6 +22,7 @@ const sidebarStyle = theme => ({
     zIndex: "1",
     ...boxShadow,
     width: drawerWidth,
+    backgroundColor: drawerBGColor,
     [theme.breakpoints.up("md")]: {
       width: drawerWidth,
       position: "fixed",

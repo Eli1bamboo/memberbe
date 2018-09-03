@@ -1,4 +1,3 @@
-'use strict';
 /*
  * Created by @andresdicamillo
  * Service mode for differtens kind of services that paclab could offer

@@ -33,12 +33,12 @@ baseUserSchema.pre('save', function (next) {
   const user = this
   this.updatedAt = Date.now()
   if (!user.isModified('passwordHash')) return next()
-  bcrypt.hash(user.passwordHash, 10, function (err, hash) {
-    if (err) {
-      return next(err)
+  bcrypt.hash(user.passwordHash, 10, (err, hash) => {
+    if (!err) {
+      user.passwordHash = hash
+      next()
     }
-    user.passwordHash = hash
-    next()
+    return next(err)
   })
 })
 const UserModel = mongoose.model('User', baseUserSchema)
