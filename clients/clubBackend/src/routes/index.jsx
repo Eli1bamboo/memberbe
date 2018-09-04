@@ -1,5 +1,5 @@
-import Dashboard from "layouts/Admin/";
+import Dashboard from '../layouts/Admin/'
 
-const indexRoutes = [{ path: "/", component: Dashboard }];
+const indexRoutes = [ { path: '/', component: Dashboard } ]
 
-export default indexRoutes;
+export default indexRoutes
