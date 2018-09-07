@@ -1,4 +1,5 @@
 import axios from 'axios'
+import _isEmpty from 'lodash/isEmpty'
 
 import { FETCH_USER, LOGIN_USER, LOGIN_FAILED } from './types'
 
@@ -17,13 +18,18 @@ export const loginUser = (email, password) => async (dispatch) => {
         password
       })
       .then((response) => {
-        localStorage.setItem('token', response.data.token)
-
         const message = response.data.message || null
+
+        const isTokenEmpty = _isEmpty(response.data.token)
+
+        if (!isTokenEmpty) {
+          localStorage.setItem('token', response.data.token)
+        }
 
         dispatch({
           type: LOGIN_USER,
           payload: {
+            token: response.data.token,
             user: response.data.user,
             success: response.data.status,
             message

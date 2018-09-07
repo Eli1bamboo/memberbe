@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import * as actions from './actions'
 
 import PropTypes from 'prop-types'
+
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -15,8 +16,9 @@ import LockIcon from '@material-ui/icons/LockOutlined'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import Snackbar from '@material-ui/core/Snackbar'
-
 import withStyles from '@material-ui/core/styles/withStyles'
+
+import _isEmpty from 'lodash/isEmpty'
 
 const styles = (theme) => ({
   layout: {
@@ -63,6 +65,14 @@ class Login extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
+    const { history } = this.props
+
+    const hasToken = !_isEmpty(localStorage.getItem('token'))
+
+    if (hasToken) {
+      history.push('/dashboard')
+    }
+
     if (nextProps.login.message && nextProps.login.message.length) {
       this.setState({
         openSnackbar: true,
@@ -86,7 +96,7 @@ class Login extends Component {
   }
 
   handleSubmit = () => {
-    const { loginUser } = this.props
+    const { loginUser, token } = this.props
     const { formData } = this.state
 
     loginUser(formData.email, formData.password)

@@ -7,6 +7,10 @@ import Login from '../Pages/Login'
 import Dashboard from '../Pages/Dashboard'
 
 class Routes extends Component {
+  componentWillReceiveProps () {
+    console.log('recibio props')
+  }
+
   render () {
     return (
       <Switch>
