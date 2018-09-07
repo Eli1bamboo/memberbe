@@ -7,9 +7,9 @@ import thunk from 'redux-thunk'
 
 import backendStore from './reducers'
 
-import Layout from './Layout'
+import Routes from './Routes'
 
-const api = 'https://swapi.co/api'
+const api = 'http://localhost:9020/'
 
 let store = createStore(
   backendStore,
@@ -24,7 +24,7 @@ class App extends Component {
     return (
       <Provider store={store}>
         <Router>
-          <Route component={Layout} />
+          <Route component={Routes} />
         </Router>
       </Provider>
     )

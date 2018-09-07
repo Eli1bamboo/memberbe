@@ -1,54 +1,44 @@
-import { request } from '../../utils'
+import axios from 'axios'
 
-export const FETCH_PEOPLE_SEARCHING = 'FETCH_PEOPLE_SEARCHING'
-export const FETCH_PEOPLE_SEARCHED = 'FETCH_PEOPLE_SEARCHED'
-export const FETCH_PEOPLE_FAILED = 'FETCH_PEOPLE_FAILED'
+import { FETCH_USER, LOGIN_USER, LOGIN_FAILED } from './types'
 
-export const FETCH_DETAIL_SEARCHING = 'FETCH_DETAIL_SEARCHING'
-export const FETCH_DETAIL_SEARCHED = 'FETCH_DETAIL_SEARCHED'
+const api = 'http://localhost:9020/users/login'
 
-export const fetchPeople = () => {
-  return (dispatch, getState, api) => {
-    dispatch({
-      type: FETCH_PEOPLE_SEARCHING,
-      text: 'Build my first Redux app'
-    })
-    request(`${api}/people`, 'GET').then((response) =>
-      dispatch({
-        type: FETCH_PEOPLE_SEARCHED,
-        payload: {
-          results: response.results
-        }
-      })
-    )
-  }
+export const fetchUser = () => async (dispatch) => {
+  const res = await axios.get('/api/Account/GetUser')
+  dispatch({ type: FETCH_USER, payload: res.data })
 }
 
-export const fetchDetail = (url) => {
-  return (dispatch, getState, api) => {
-    dispatch({
-      type: FETCH_DETAIL_SEARCHING,
-      text: 'Build my first Redux app'
-    })
-    request(url, 'GET').then((response) =>
-      dispatch({
-        type: FETCH_DETAIL_SEARCHED,
-        payload: response
+export const loginUser = (email, password) => async (dispatch) => {
+  try {
+    const res = await axios
+      .post(api, {
+        email: email,
+        password: password
       })
-    )
+      .then((response) => {
+        localStorage.setItem('token', response.data.token)
+        const message = response.data ? '' : 'Incorrect email or password'
+        dispatch({
+          type: LOGIN_USER,
+          payload: {
+            user: response.data.user,
+            success: response.data.status,
+            message
+          }
+        })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  } catch (ex) {
+    console.log('Login Failed:', ex)
+    dispatch({
+      type: LOGIN_FAILED,
+      payload: {
+        success: false,
+        message: 'Unable to connect to authentication server'
+      }
+    })
   }
 }
-
-// export const fetchDetailStart = () => {
-//   return {
-//     type: FETCH_DETAIL_SEARCHING,
-//     text: 'Build my first Redux app'
-//   }
-// }
-
-// export const fetchDetailSuccess = (response) => {
-//   return {
-//     type: FETCH_DETAIL_SEARCHED,
-//     payload: response
-//   }
-// }

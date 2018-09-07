@@ -4,7 +4,7 @@ import Login from '../Pages/Login'
 
 import { Route } from 'react-router-dom'
 
-class Layout extends Component {
+class Routes extends Component {
   handleSelectRoute = (route) => {
     const { history } = this.props
     history.push(`/${route}`)
@@ -17,4 +17,4 @@ class Layout extends Component {
   }
 }
 
-export default Layout
+export default Routes

@@ -1,38 +1,18 @@
-import * as ActionTypes from './actions'
+import { LOGIN_USER, LOGIN_FAILED } from './types'
 
-const initialState = {
-  isSearching: false,
-  isSearchingDetail: false
-}
-
-export default function reducer (state = initialState, action) {
+export default function (state = null, action) {
   switch (action.type) {
-    case ActionTypes.FETCH_PEOPLE_SEARCHING:
+    case LOGIN_USER:
       return {
-        ...state,
-        isSearching: true
+        success: action.payload.success,
+        message: action.payload.message,
+        user: action.payload.user
       }
-
-    case ActionTypes.FETCH_PEOPLE_SEARCHED:
-      const { payload } = action
-      return {
-        ...state,
-        isSearching: false,
-        peopleList: payload.results
-      }
-
-    case ActionTypes.FETCH_DETAIL_SEARCHING:
-      return {
-        ...state,
-        isSearchingDetail: true
-      }
-    case ActionTypes.FETCH_DETAIL_SEARCHED:
-      return {
-        ...state,
-        isSearchingDetail: false,
-        peopleDetail: action.payload
-      }
+      break
+    case LOGIN_FAILED:
+      return { success: false, message: action.payload.message }
+      break
     default:
-      return state
+      return { success: false, message: '' }
   }
 }
