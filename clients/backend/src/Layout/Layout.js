@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import LoginPage from '../LoginPage'
+import Login from '../Pages/Login'
 
 import { Route } from 'react-router-dom'
 
@@ -13,13 +13,7 @@ class Layout extends Component {
   //         <li onClick={() => this.handleSelectRoute('login')}>Login</li>
   //       </ul>
   render () {
-    return (
-      <div>
-        <div>
-          <Route exact path='/' component={LoginPage} />
-        </div>
-      </div>
-    )
+    return <Route exact path='/' component={Login} />
   }
 }
 

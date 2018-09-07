@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
-import loginPage from './LoginPage/reducer'
+import login from './Pages/Login/reducer'
 
 const backendStore = combineReducers({
-  loginPage
+  login
 })
 
 export default backendStore

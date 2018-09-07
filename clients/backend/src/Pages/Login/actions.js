@@ -1,4 +1,4 @@
-import { request } from '../utils'
+import { request } from '../../utils'
 
 export const FETCH_PEOPLE_SEARCHING = 'FETCH_PEOPLE_SEARCHING'
 export const FETCH_PEOPLE_SEARCHED = 'FETCH_PEOPLE_SEARCHED'
