@@ -46,7 +46,7 @@ class UserController {
       res.status(400).send({
         status: 'error',
         error: e,
-        message: 'Server Error with Product'
+        message: 'Server Error when fetching users'
       });
     }
   }

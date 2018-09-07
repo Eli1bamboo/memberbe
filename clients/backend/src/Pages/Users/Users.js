@@ -20,6 +20,8 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 import Navigation from '../../Components/Navigation'
 
+import SimpleTable from './SimpleTable'
+
 const drawerWidth = 240
 
 const styles = (theme) => ({
@@ -96,7 +98,7 @@ const styles = (theme) => ({
   }
 })
 
-class Dashboard extends Component {
+class Users extends Component {
   state = {
     open: true
   }
@@ -107,6 +109,14 @@ class Dashboard extends Component {
 
   handleDrawerClose = () => {
     this.setState({ open: false })
+  }
+
+  componentWillMount() {
+    this.refresh();
+  }
+
+  refresh = () => {
+    this.props.fetchUsers()
   }
 
   render() {
@@ -146,7 +156,7 @@ class Dashboard extends Component {
                 noWrap
                 className={classes.title}
               >
-                Dashboard
+                Users
               </Typography>
               <IconButton color='inherit'>
                 <Badge badgeContent={4} color='secondary'>
@@ -176,8 +186,11 @@ class Dashboard extends Component {
           <main className={classes.content}>
             <div className={classes.appBarSpacer} />
             <Typography variant='display1' gutterBottom>
-              Welcome
+              Users
             </Typography>
+            <div className={classes.tableContainer}>
+              <SimpleTable />
+            </div>
           </main>
         </div>
       </React.Fragment>
@@ -185,14 +198,14 @@ class Dashboard extends Component {
   }
 }
 
-Dashboard.propTypes = {
+Users.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-function mapStateToProps({ login }) {
-  return { login }
+function mapStateToProps({ users }) {
+  return { users }
 }
 
 const enhance = compose(withStyles(styles), connect(mapStateToProps, actions))
 
-export default enhance(Dashboard)
+export default enhance(Users)
