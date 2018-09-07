@@ -9,12 +9,10 @@ import backendStore from './reducers'
 
 import Routes from './Routes'
 
-const api = 'http://localhost:9020/'
-
 let store = createStore(
   backendStore,
   compose(
-    applyMiddleware(thunk.withExtraArgument(api)),
+    applyMiddleware(thunk.withExtraArgument()),
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   )
 )

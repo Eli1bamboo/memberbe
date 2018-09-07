@@ -14,6 +14,8 @@ import InputLabel from '@material-ui/core/InputLabel'
 import LockIcon from '@material-ui/icons/LockOutlined'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
+import Snackbar from '@material-ui/core/Snackbar'
+
 import withStyles from '@material-ui/core/styles/withStyles'
 
 const styles = (theme) => ({
@@ -52,12 +54,27 @@ const styles = (theme) => ({
 class Login extends Component {
   constructor (props) {
     super(props)
+
     this.state = {
+      openSnackbar: false,
       errorMsg: '',
       formData: { email: '', password: '' }
     }
+  }
 
-    // console.log('loggedIn:', this.props.login)
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.login.message && nextProps.login.message.length) {
+      this.setState({
+        openSnackbar: true,
+        errorMsg: nextProps.login.message
+      })
+    }
+  }
+
+  closeSnackbar = () => {
+    this.setState({
+      openSnackbar: false
+    })
   }
 
   handleChange = (event, value) => {
@@ -69,23 +86,15 @@ class Login extends Component {
   }
 
   handleSubmit = () => {
+    const { loginUser } = this.props
     const { formData } = this.state
 
-    try {
-      this.props.loginUser(formData.email, formData.password).then(() => {
-        // console.log('thisprops', this.props)
-      })
-    } catch (ex) {
-      this.setState({ errorMsg: 'Unable to connect to server' })
-      console.log('error', ex)
-    }
+    loginUser(formData.email, formData.password)
   }
 
   render () {
     const { classes } = this.props
-    const { formData } = this.state
-
-    console.log(this.state, this.props)
+    const { formData, errorMsg, openSnackbar } = this.state
 
     return (
       <React.Fragment>
@@ -133,6 +142,15 @@ class Login extends Component {
             </form>
           </Paper>
         </main>
+        <Snackbar
+          open={openSnackbar}
+          autoHideDuration={2000}
+          onClose={this.closeSnackbar}
+          ContentProps={{
+            'aria-describedby': 'message-id'
+          }}
+          message={<span id='message-id'>{errorMsg}</span>}
+        />
       </React.Fragment>
     )
   }

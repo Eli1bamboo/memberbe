@@ -11,14 +11,16 @@ export const fetchUser = () => async (dispatch) => {
 
 export const loginUser = (email, password) => async (dispatch) => {
   try {
-    const res = await axios
+    await axios
       .post(api, {
-        email: email,
-        password: password
+        email,
+        password
       })
       .then((response) => {
         localStorage.setItem('token', response.data.token)
-        const message = response.data ? '' : 'Incorrect email or password'
+
+        const message = response.data.message || null
+
         dispatch({
           type: LOGIN_USER,
           payload: {
@@ -29,10 +31,11 @@ export const loginUser = (email, password) => async (dispatch) => {
         })
       })
       .catch((error) => {
-        console.log(error)
+        console.log('error', error)
       })
-  } catch (ex) {
-    console.log('Login Failed:', ex)
+  } catch (err) {
+    console.log('Login Failed:', err)
+
     dispatch({
       type: LOGIN_FAILED,
       payload: {
