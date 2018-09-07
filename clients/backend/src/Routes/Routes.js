@@ -1,19 +1,19 @@
 import React, { Component } from 'react'
+import { Switch, Route } from 'react-router-dom'
+
+import { PrivateRoute } from './PrivateRoute'
 
 import Login from '../Pages/Login'
-
-import { Route } from 'react-router-dom'
+import Dashboard from '../Pages/Dashboard'
 
 class Routes extends Component {
-  handleSelectRoute = (route) => {
-    const { history } = this.props
-    history.push(`/${route}`)
-  }
-  // <ul style={flexContainer}>
-  //         <li onClick={() => this.handleSelectRoute('login')}>Login</li>
-  //       </ul>
   render () {
-    return <Route exact path='/' component={Login} />
+    return (
+      <Switch>
+        <Route exact path='/' component={Login} />
+        <PrivateRoute exact path='/dashboard' component={Dashboard} />
+      </Switch>
+    )
   }
 }
 

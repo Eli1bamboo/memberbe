@@ -2,10 +2,9 @@
   "env": {
     "node": true
   },
-  "parserOptions": {
-    "sourceType": "script"
-  },
   "rules": {
+    "jsx-quotes": ["error", "prefer-single"],
+    "space-before-function-paren": 0,
     "strict": [
       "error",
       "global"
