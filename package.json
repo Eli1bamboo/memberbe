@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "api": "npm run start --prefix clubApi",
-    "backend": "npm run start --prefix clients/clubBackend",
+    "backend": "npm run start --prefix clients/backend",
     "swagger": "npm run start --prefix clubApi-swagger",
     "start": "concurrently 'npm run api' 'npm run backend'",
     "start-swagger": "concurrently 'npm run api' 'npm run backend' 'npm run swagger'"
