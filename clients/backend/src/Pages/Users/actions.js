@@ -1,5 +1,4 @@
 import axios from 'axios'
-import _isEmpty from 'lodash/isEmpty'
 
 import { USERS_FETCHED, FAILED_USERS_FETCHED } from './types'
 

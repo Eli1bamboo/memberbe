@@ -54,7 +54,7 @@ const styles = (theme) => ({
 })
 
 class Login extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.state = {
@@ -64,7 +64,7 @@ class Login extends Component {
     }
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     const { history } = this.props
 
     const hasToken = !_isEmpty(localStorage.getItem('token'))
@@ -96,13 +96,13 @@ class Login extends Component {
   }
 
   handleSubmit = () => {
-    const { loginUser, token } = this.props
+    const { loginUser } = this.props
     const { formData } = this.state
 
     loginUser(formData.email, formData.password)
   }
 
-  render () {
+  render() {
     const { classes } = this.props
     const { formData, errorMsg, openSnackbar } = this.state
 
@@ -125,6 +125,7 @@ class Login extends Component {
                   autoComplete='email'
                   autoFocus
                   value={formData.email}
+                  required
                   onChange={(e) => this.handleChange(e, 'email')}
                 />
               </FormControl>
@@ -136,6 +137,7 @@ class Login extends Component {
                   id='password'
                   autoComplete='current-password'
                   value={formData.password}
+                  required
                   onChange={(e) => this.handleChange(e, 'password')}
                 />
               </FormControl>
@@ -153,6 +155,7 @@ class Login extends Component {
           </Paper>
         </main>
         <Snackbar
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
           open={openSnackbar}
           autoHideDuration={2000}
           onClose={this.closeSnackbar}
@@ -170,7 +173,7 @@ Login.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-function mapStateToProps ({ login }) {
+function mapStateToProps({ login }) {
   return { login }
 }
 
