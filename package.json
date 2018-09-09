@@ -15,9 +15,9 @@
   "license": "Unlicense",
   "private": true,
   "dependencies": {
-    "assets": "^3.0.0",
-    "components": "^0.1.0",
-    "concurrently": "^3.5.1",
+    "assets": "3.0.0",
+    "components": "0.1.0",
+    "concurrently": "3.5.1",
     "connect": "3.2.0",
     "dotenv": "6.0.0",
     "eslint": "4.18.2",
@@ -26,9 +26,9 @@
     "eslint-plugin-jsx-a11y": "6.0.2",
     "eslint-plugin-react": "7.4.0",
     "js-yaml": "3.3.0",
-    "layouts": "^3.0.1",
-    "lodash": "^4.17.10",
+    "layouts": "3.0.1",
+    "lodash": "4.17.10",
     "swagger-tools": "0.10.1",
-    "views": "^1.0.2"
+    "views": "1.0.2"
   }
 }
