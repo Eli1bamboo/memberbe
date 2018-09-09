@@ -37,7 +37,7 @@ const styles = (theme) => ({
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create([ 'width', 'margin' ], {
+    transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
     })
@@ -45,7 +45,7 @@ const styles = (theme) => ({
   appBarShift: {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create([ 'width', 'margin' ], {
+    transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen
     })
@@ -108,7 +108,7 @@ class Users extends Component {
     this.setState({ open: false })
   }
 
-  componentWillMount () {
+  componentWillMount() {
     this.refresh()
   }
 
@@ -116,9 +116,11 @@ class Users extends Component {
     this.props.fetchUsers()
   }
 
-  render () {
+  render() {
     const { classes } = this.props
     const { open } = this.state
+
+    console.log(this.props);
 
     return (
       <React.Fragment>
@@ -166,7 +168,7 @@ Users.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-function mapStateToProps ({ users }) {
+function mapStateToProps({ users }) {
   return { users }
 }
 
