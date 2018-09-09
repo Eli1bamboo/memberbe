@@ -15,6 +15,9 @@ import Divider from '@material-ui/core/Divider'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import Navigation from '../../Components/Navigation'
 
+import Button from '@material-ui/core/Button';
+import AddIcon from '@material-ui/icons/Add';
+
 import TopBar from '../../Components/TopBar'
 import SimpleTable from '../../Components/SimpleTable'
 
@@ -91,7 +94,12 @@ const styles = (theme) => ({
   },
   tableContainer: {
     height: 320
-  }
+  },
+  fab: {
+    position: 'absolute',
+    bottom: theme.spacing.unit * 2,
+    right: theme.spacing.unit * 2,
+  },
 })
 
 class Users extends Component {
@@ -173,6 +181,9 @@ class Users extends Component {
                 }
               />
             </div>
+            <Button variant="fab" className={classes.fab} color="primary">
+              <AddIcon />
+            </Button>
           </main>
         </div>
       </React.Fragment>

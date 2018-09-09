@@ -14,8 +14,14 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Menu from '@material-ui/core/Menu'
 import MenuIcon from '@material-ui/icons/Menu'
 import classNames from 'classnames'
+import PowerSettingsNew from '@material-ui/icons/PowerSettingsNew'
+import PersonIcon from '@material-ui/icons/Person'
+
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 
 import ProgressBar from '../ProgressBar'
+import { Divider } from '../../../node_modules/@material-ui/core';
 
 const drawerWidth = 240
 
@@ -32,7 +38,7 @@ const styles = (theme) => ({
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create([ 'width', 'margin' ], {
+    transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
     })
@@ -40,7 +46,7 @@ const styles = (theme) => ({
   appBarShift: {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create([ 'width', 'margin' ], {
+    transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen
     })
@@ -59,7 +65,7 @@ const styles = (theme) => ({
 })
 
 class TopBar extends Component {
-  constructor (props) {
+  constructor(props) {
     super()
 
     this.state = {
@@ -68,7 +74,7 @@ class TopBar extends Component {
     }
   }
 
-  componentWillMount () {
+  componentWillMount() {
     const { users } = this.props
 
     const { isSearching } = users
@@ -78,7 +84,7 @@ class TopBar extends Component {
     })
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     const { users } = nextProps
 
     const { isSearching } = users
@@ -96,7 +102,7 @@ class TopBar extends Component {
     this.setState({ anchorEl: null })
   }
 
-  render () {
+  render() {
     const { classes, pageTitle } = this.props
     const { anchorEl, isSearching } = this.state
 
@@ -153,8 +159,19 @@ class TopBar extends Component {
               open={open}
               onClose={this.handleClose}
             >
-              <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-              <MenuItem onClick={this.handleClose}>My account</MenuItem>
+              <MenuItem onClick={this.handleClose} className={classes.menuItem}>
+                <ListItemIcon className={classes.icon}>
+                  <PersonIcon />
+                </ListItemIcon>
+                <ListItemText classes={{ primary: classes.primary }} inset primary="My Profile" />
+              </MenuItem>
+              <Divider />
+              <MenuItem onClick={this.handleClose} className={classes.menuItem}>
+                <ListItemIcon className={classes.icon}>
+                  <PowerSettingsNew />
+                </ListItemIcon>
+                <ListItemText classes={{ primary: classes.primary }} inset primary="Log out" />
+              </MenuItem>
             </Menu>
           </div>
         </Toolbar>
