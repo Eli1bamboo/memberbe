@@ -1,11 +1,17 @@
 import axios from 'axios'
 
-import { USERS_FETCHED, FAILED_USERS_FETCHED } from './types'
+import { USERS_FETCHING, USERS_FETCHED, USERS_FETCH_FAILED } from './types'
 
 import { API_URL } from '../../utils/Constants'
 
 export const fetchUsers = () => async (dispatch) => {
   try {
+    dispatch({
+      type: USERS_FETCHING,
+      payload: {
+        isSearching: true
+      }
+    })
     await axios({
       method: 'GET',
       url: `${API_URL}users`,
@@ -18,8 +24,8 @@ export const fetchUsers = () => async (dispatch) => {
           dispatch({
             type: USERS_FETCHED,
             payload: {
-              token: response.data.token,
-              user: response.data.users
+              isSearching: false,
+              users: response.data.users
             }
           })
         }
@@ -29,10 +35,10 @@ export const fetchUsers = () => async (dispatch) => {
       })
   } catch (err) {
     dispatch({
-      type: FAILED_USERS_FETCHED,
+      type: USERS_FETCH_FAILED,
       payload: {
-        success: false,
-        message: 'Unable to connect to authentication server'
+        isSearching: false,
+        message: 'Unable to fetch users'
       }
     })
   }
