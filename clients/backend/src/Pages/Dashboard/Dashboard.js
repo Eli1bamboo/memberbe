@@ -93,8 +93,12 @@ const styles = (theme) => ({
 })
 
 class Dashboard extends Component {
-  state = {
-    open: true
+  constructor (props) {
+    super()
+
+    this.state = {
+      open: true
+    }
   }
 
   handleDrawerOpen = () => {

@@ -14,6 +14,8 @@ import Badge from '@material-ui/core/Badge'
 import MenuIcon from '@material-ui/icons/Menu'
 import classNames from 'classnames'
 
+import ProgressBar from '../ProgressBar'
+
 const drawerWidth = 240
 
 const styles = (theme) => ({
@@ -29,7 +31,7 @@ const styles = (theme) => ({
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
+    transition: theme.transitions.create([ 'width', 'margin' ], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
     })
@@ -37,7 +39,7 @@ const styles = (theme) => ({
   appBarShift: {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
+    transition: theme.transitions.create([ 'width', 'margin' ], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen
     })
@@ -56,9 +58,27 @@ const styles = (theme) => ({
 })
 
 class TopBar extends Component {
+  constructor (props) {
+    super()
 
-  render() {
+    this.state = {
+      isSearching: true
+    }
+  }
+
+  componentWillReceiveProps (nextProps) {
+    const { users } = nextProps
+
+    const { isSearching } = users
+
+    this.setState({
+      isSearching
+    })
+  }
+
+  render () {
     const { classes, pageTitle } = this.props
+    const { isSearching } = this.state
 
     return (
       <AppBar
@@ -68,10 +88,7 @@ class TopBar extends Component {
           this.props.open && classes.appBarShift
         )}
       >
-        <Toolbar
-          disableGutters={!this.props.open}
-          className={classes.toolbar}
-        >
+        <Toolbar disableGutters={!this.props.open} className={classes.toolbar}>
           <IconButton
             color='inherit'
             aria-label='Open drawer'
@@ -97,21 +114,24 @@ class TopBar extends Component {
             </Badge>
           </IconButton>
         </Toolbar>
+        {isSearching ? <ProgressBar /> : null}
       </AppBar>
     )
   }
 }
 
-
-
 TopBar.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-function mapStateToProps({ users }) {
-  return { users }
+const mapStateToProps = (state) => {
+  const { users } = state
+
+  return {
+    users
+  }
 }
 
-const enhance = compose(withStyles(styles), connect(mapStateToProps, null))
+const enhance = compose(withStyles(styles), connect(mapStateToProps))
 
 export default enhance(TopBar)
