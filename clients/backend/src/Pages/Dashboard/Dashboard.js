@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import { compose } from 'redux'
 import { connect } from 'react-redux'
-import * as actions from './actions'
+import * as actions from '../Login/actions'
 
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
@@ -39,7 +39,7 @@ const styles = (theme) => ({
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
+    transition: theme.transitions.create([ 'width', 'margin' ], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
     })
@@ -47,7 +47,7 @@ const styles = (theme) => ({
   appBarShift: {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
+    transition: theme.transitions.create([ 'width', 'margin' ], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen
     })
@@ -110,11 +110,9 @@ class Dashboard extends Component {
     this.setState({ open: false })
   }
 
-  render() {
+  render () {
     const { classes } = this.props
     const { open } = this.state
-
-    console.log(this.props)
 
     return (
       <React.Fragment>
@@ -159,7 +157,7 @@ Dashboard.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-function mapStateToProps({ login }) {
+function mapStateToProps ({ login }) {
   return { login }
 }
 

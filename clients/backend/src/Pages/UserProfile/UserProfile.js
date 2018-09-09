@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import { compose } from 'redux'
 import { connect } from 'react-redux'
-import * as actions from './actions'
+import * as actions from '../Login/actions'
 
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
@@ -111,18 +111,10 @@ class UserProfile extends Component {
     this.setState({ open: false })
   }
 
-  componentWillMount () {
-    this.refresh()
-  }
-
-  refresh = () => {
-    this.props.fetchUsers()
-  }
-
   render () {
-    const { classes } = this.props
+    const { classes, login } = this.props
 
-    console.log(this.props)
+    const { active, createdAt, email, firstName, lastName, _id } = login
 
     return (
       <React.Fragment>
