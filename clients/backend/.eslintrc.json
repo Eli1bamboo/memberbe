@@ -3,6 +3,7 @@
     "node": true
   },
   "rules": {
+    "react/prop-types": [<enabled>],
     "jsx-quotes": ["error", "prefer-single"],
     "space-before-function-paren": 0,
     "strict": [

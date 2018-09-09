@@ -12,7 +12,6 @@ import Drawer from '@material-ui/core/Drawer'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
 import Divider from '@material-ui/core/Divider'
-import Badge from '@material-ui/core/Badge'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import Navigation from '../../Components/Navigation'
 
