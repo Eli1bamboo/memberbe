@@ -11,32 +11,21 @@ const styles = {
   }
 }
 
-const TABLE_COLUMNS = [
-  {
-    key: 'firstName',
-    label: 'First Name'
-  },
-  {
-    key: 'email',
-    label: 'Email'
-  }
-]
-
 class SimpleTable extends Component {
-  render () {
-    const { classes, data } = this.props
+  render() {
+    const { classes, data, columns } = this.props
 
     return (
       <Paper className={classes.root}>
         <MuiThemeProvider>
           <DataTables
             height={'auto'}
-            selectable={false}
-            columns={TABLE_COLUMNS}
+            selectable={true}
+            columns={columns}
             data={data}
             showCheckboxes={false}
             page={1}
-            count={100}
+            count={(data && data.length) ? data.length : 0}
           />
         </MuiThemeProvider>
       </Paper>
