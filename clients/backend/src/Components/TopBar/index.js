@@ -9,8 +9,9 @@ import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
-import NotificationsIcon from '@material-ui/icons/Notifications'
-import Badge from '@material-ui/core/Badge'
+import AccountCircle from '@material-ui/icons/AccountCircle'
+import MenuItem from '@material-ui/core/MenuItem'
+import Menu from '@material-ui/core/Menu'
 import MenuIcon from '@material-ui/icons/Menu'
 import classNames from 'classnames'
 
@@ -62,8 +63,19 @@ class TopBar extends Component {
     super()
 
     this.state = {
-      isSearching: true
+      anchorEl: null,
+      isSearching: false
     }
+  }
+
+  componentWillMount () {
+    const { users } = this.props
+
+    const { isSearching } = users
+
+    this.setState({
+      isSearching
+    })
   }
 
   componentWillReceiveProps (nextProps) {
@@ -76,9 +88,19 @@ class TopBar extends Component {
     })
   }
 
+  handleMenu = (event) => {
+    this.setState({ anchorEl: event.currentTarget })
+  }
+
+  handleClose = () => {
+    this.setState({ anchorEl: null })
+  }
+
   render () {
     const { classes, pageTitle } = this.props
-    const { isSearching } = this.state
+    const { anchorEl, isSearching } = this.state
+
+    const open = Boolean(anchorEl)
 
     return (
       <AppBar
@@ -108,11 +130,33 @@ class TopBar extends Component {
           >
             {pageTitle}
           </Typography>
-          <IconButton color='inherit'>
-            <Badge badgeContent={4} color='secondary'>
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
+          <div>
+            <IconButton
+              aria-owns={open ? 'menu-appbar' : null}
+              aria-haspopup='true'
+              onClick={this.handleMenu}
+              color='inherit'
+            >
+              <AccountCircle />
+            </IconButton>
+            <Menu
+              id='menu-appbar'
+              anchorEl={this.state.anchorEl}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right'
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right'
+              }}
+              open={open}
+              onClose={this.handleClose}
+            >
+              <MenuItem onClick={this.handleClose}>Profile</MenuItem>
+              <MenuItem onClick={this.handleClose}>My account</MenuItem>
+            </Menu>
+          </div>
         </Toolbar>
         {isSearching ? <ProgressBar /> : null}
       </AppBar>
