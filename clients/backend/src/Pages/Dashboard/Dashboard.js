@@ -19,6 +19,7 @@ import MenuIcon from '@material-ui/icons/Menu'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 import Navigation from '../../Components/Navigation'
+import TopBar from '../../Components/TopBar'
 
 const drawerWidth = 240
 
@@ -111,57 +112,26 @@ class Dashboard extends Component {
 
   render () {
     const { classes } = this.props
+    const { open } = this.state
 
     return (
       <React.Fragment>
         <CssBaseline />
         <div className={classes.root}>
-          <AppBar
-            position='absolute'
-            className={classNames(
-              classes.appBar,
-              this.state.open && classes.appBarShift
-            )}
-          >
-            <Toolbar
-              disableGutters={!this.state.open}
-              className={classes.toolbar}
-            >
-              <IconButton
-                color='inherit'
-                aria-label='Open drawer'
-                onClick={this.handleDrawerOpen}
-                className={classNames(
-                  classes.menuButton,
-                  this.state.open && classes.menuButtonHidden
-                )}
-              >
-                <MenuIcon />
-              </IconButton>
-              <Typography
-                variant='title'
-                color='inherit'
-                noWrap
-                className={classes.title}
-              >
-                Dashboard
-              </Typography>
-              <IconButton color='inherit'>
-                <Badge badgeContent={4} color='secondary'>
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton>
-            </Toolbar>
-          </AppBar>
+          <TopBar
+            pageTitle={'Dashboard'}
+            open={open}
+            handleDrawerOpen={this.handleDrawerOpen}
+          />
           <Drawer
             variant='permanent'
             classes={{
               paper: classNames(
                 classes.drawerPaper,
-                !this.state.open && classes.drawerPaperClose
+                !open && classes.drawerPaperClose
               )
             }}
-            open={this.state.open}
+            open={open}
           >
             <div className={classes.toolbarIcon}>
               <IconButton onClick={this.handleDrawerClose}>
