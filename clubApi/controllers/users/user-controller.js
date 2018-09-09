@@ -19,11 +19,11 @@ class UserController {
          *  2. Send an email to reset the password
          *  3. If customerId @param is filled, add this user to this customer */
     try {
-      const canAssignRole = await AccessControl.canAssignRole(req.user);
-      if (req.query.customerId === '') delete req.query.customerId
-      const user = await UserManager.create(req.query, canAssignRole);
-      if (!user._id) { return res.status(200).send({ status: 'unsuccessfull', error: user.error, message: user.message }); }
-      delete user._doc.passwordHash;
+      const um = new UserManager()
+      const canAssignRole = await AccessControl.canAssignRole(req.user);  
+      //const canAssignRole = true
+      console.log(req.body)
+      const user = await um.create(req.body, canAssignRole);
       res.status(201).send({
         status: 'created',
         user,

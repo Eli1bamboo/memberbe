@@ -66,6 +66,7 @@ class UserManager {
     try {
       const object = this;
       var user = await this.getByEmail(data.email);
+      console.log
       if (!user) {
         const newUser = {
           email: data.email,
