@@ -94,12 +94,11 @@ class UserController {
   }
   async update(req, res) {
     try {
-      var user = await UserManager.getByEmail(req.query.email);
+      const um = new UserManager()
+      let user = await um.get(req.params.userId);
       if (user) {
-        if (req.query.customerId === '') delete req.query.customerId
-        var user = await UserManager.update(req.query, req.params.userId)
-        var user = await UserManager.getByEmail(req.query.email);
-        delete user._doc.passwordHash;
+        user = await um.update(req.body, req.params.userId)
+        
         return res.status(200).send({
           status: 'updated',
           user,
@@ -109,7 +108,7 @@ class UserController {
       return res.status(400).send({
         status: 'error',
         user,
-        message: 'User has not access'
+        message: 'User not found'
       });
     } catch (e) {
       throw e;
