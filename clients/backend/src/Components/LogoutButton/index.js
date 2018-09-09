@@ -12,16 +12,20 @@ class LogoutButton extends Component {
     return true
   }
 
+  doLogout = () => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
+  }
+
   handleLogout = () => {
     const { history } = this.props
 
-    localStorage.removeItem('token')
+    this.doLogout()
 
     history.push('/')
   }
 
   render () {
-    console.log(this.props)
     return (
       <ListItem button onClick={this.handleLogout}>
         <ListItemIcon>

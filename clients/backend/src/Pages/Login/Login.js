@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import { compose } from 'redux'
 import { connect } from 'react-redux'
-import * as actions from './actions'
+import { loginUser } from './actions'
 
 import PropTypes from 'prop-types'
 
@@ -54,7 +54,7 @@ const styles = (theme) => ({
 })
 
 class Login extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = {
@@ -64,7 +64,7 @@ class Login extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps (nextProps) {
     const { history } = this.props
 
     const hasToken = !_isEmpty(localStorage.getItem('token'))
@@ -102,7 +102,7 @@ class Login extends Component {
     loginUser(formData.email, formData.password)
   }
 
-  render() {
+  render () {
     const { classes } = this.props
     const { formData, errorMsg, openSnackbar } = this.state
 
@@ -173,10 +173,21 @@ Login.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-function mapStateToProps({ login }) {
-  return { login }
+const mapStateToProps = (state) => {
+  const { login } = state
+
+  return {
+    login
+  }
 }
 
-const enhance = compose(withStyles(styles), connect(mapStateToProps, actions))
+const mapDispatchToProps = {
+  loginUser
+}
+
+const enhance = compose(
+  withStyles(styles),
+  connect(mapStateToProps, mapDispatchToProps)
+)
 
 export default enhance(Login)
