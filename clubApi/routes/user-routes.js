@@ -11,7 +11,7 @@ const SECRET = Buffer.from(process.env.SHARED_SECRET, 'base64');
 const AccessControl = require('../utils/access-control');
 const { SYS_ADMIN } = require('../constants');
 module.exports = function (app) {
-  app.post('/users/create', AccessControl.isAdminOrSysAdmin, UserController.create);
+  app.post('/users/create', UserController.create);
   app.get('/users/current', UserController.getCurrentUser);
   app.get('/users', UserController.getUsersList)
   app.get('/users/:userId', UserController.getUser);
