@@ -6,10 +6,8 @@ import ListItemText from '@material-ui/core/ListItemText'
 import PowerSettingsNew from '@material-ui/icons/PowerSettingsNew'
 
 class LogoutButton extends Component {
-  constructor (props) {
-    super()
-
-    console.log(props)
+  shouldComponentUpdate () {
+    return true
   }
 
   handleLogout = () => {

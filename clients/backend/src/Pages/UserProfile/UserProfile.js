@@ -20,7 +20,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 import Navigation from '../../Components/Navigation'
 
-import SimpleTable from './SimpleTable'
+import UserCard from './UserCard'
 
 const drawerWidth = 240
 
@@ -156,7 +156,7 @@ class UserProfile extends Component {
                 noWrap
                 className={classes.title}
               >
-                Users
+                User Profile
               </Typography>
               <IconButton color='inherit'>
                 <Badge badgeContent={4} color='secondary'>
@@ -186,10 +186,10 @@ class UserProfile extends Component {
           <main className={classes.content}>
             <div className={classes.appBarSpacer} />
             <Typography variant='display1' gutterBottom>
-              Users
+              User
             </Typography>
             <div className={classes.tableContainer}>
-              <SimpleTable />
+              <UserCard />
             </div>
           </main>
         </div>
@@ -202,8 +202,8 @@ UserProfile.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-function mapStateToProps ({ users }) {
-  return { users }
+function mapStateToProps ({ login }) {
+  return { login }
 }
 
 const enhance = compose(withStyles(styles), connect(mapStateToProps, actions))
