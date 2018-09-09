@@ -96,7 +96,7 @@ class Login extends Component {
   }
 
   handleSubmit = () => {
-    const { loginUser, token } = this.props
+    const { loginUser } = this.props
     const { formData } = this.state
 
     loginUser(formData.email, formData.password)
