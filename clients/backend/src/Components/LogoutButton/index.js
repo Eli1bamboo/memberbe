@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
+
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
@@ -11,7 +13,11 @@ class LogoutButton extends Component {
   }
 
   handleLogout = () => {
+    const { history } = this.props
+
     localStorage.removeItem('token')
+
+    history.push('/')
   }
 
   render () {
@@ -27,4 +33,4 @@ class LogoutButton extends Component {
   }
 }
 
-export default LogoutButton
+export default withRouter(LogoutButton)
