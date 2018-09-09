@@ -1,14 +1,16 @@
-const Um = require('../../services/user-manager');
+const UserManager = require('../../services/user-manager');
 
-const UserManager = new Um()
+const UserModel = require('../../models/user-model');
 
-const UserModelClass = require('../../models/user-model');
-
-const UserModel = new UserModelClass()
 
 const AccessControl = require('../../utils/access-control');
 
 class UserController {
+  constructor() {
+    this.UserModel = UserModel
+    this.UserManager = new UserManager()
+  }
+
   async create(req, res) {
     /* Create user from Admin  role
          * email, firstName, lastName, customerId (optional)
@@ -56,7 +58,8 @@ class UserController {
          * @query: sku, description, type, name
          */
     try {
-      const user = await UserManager.get(req.params.userId);
+      const um = new UserManager()
+      const user = await um.get(req.params.userId);
       if (!user._id) return res.status(200).send({ status: 'unsuccessfull', error: null, message: 'User not found' });
       res.status(200).send({
         status: 'ok',
@@ -66,7 +69,7 @@ class UserController {
       res.status(400).send({
         status: 'error',
         error: e,
-        message: 'User already exists'
+        message: 'user manager error'
       });
     }
   }
