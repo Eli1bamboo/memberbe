@@ -20,7 +20,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 import Navigation from '../../Components/Navigation'
 
-import SimpleTable from './SimpleTable'
+import SimpleTable from '../../Components/SimpleTable'
 
 const drawerWidth = 240
 

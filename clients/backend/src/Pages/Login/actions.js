@@ -2,8 +2,7 @@ import axios from 'axios'
 import _isEmpty from 'lodash/isEmpty'
 
 import { FETCH_USER, LOGIN_USER, LOGIN_FAILED } from './types'
-
-const api = 'http://localhost:9020/users/login'
+import { API_URL } from '../../utils/Constants'
 
 export const fetchUser = () => async (dispatch) => {
   const res = await axios.get('/api/Account/GetUser')
@@ -13,7 +12,7 @@ export const fetchUser = () => async (dispatch) => {
 export const loginUser = (email, password) => async (dispatch) => {
   try {
     await axios
-      .post(api, {
+      .post(`${API_URL}users/login`, {
         email,
         password
       })
@@ -40,8 +39,6 @@ export const loginUser = (email, password) => async (dispatch) => {
         console.log('error', error)
       })
   } catch (err) {
-    console.log('Login Failed:', err)
-
     dispatch({
       type: LOGIN_FAILED,
       payload: {
