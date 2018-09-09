@@ -2,13 +2,13 @@ import axios from 'axios'
 
 import { USERS_FETCHED, FAILED_USERS_FETCHED } from './types'
 
-const api = 'http://localhost:9020/products'
+import { API_URL } from '../../utils/Constants'
 
 export const fetchUsers = () => async (dispatch) => {
   try {
     await axios({
       method: 'GET',
-      url: `${api}`,
+      url: `${API_URL}users`,
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('token')
       }
