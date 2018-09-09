@@ -1,68 +1,57 @@
 import React, { Component } from 'react'
 import { withStyles } from '@material-ui/core/styles'
-import Table from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
-import TableCell from '@material-ui/core/TableCell'
-import TableHead from '@material-ui/core/TableHead'
-import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import DataTables from 'material-ui-datatables';
 
 const styles = {
   root: {
     width: '100%',
     overflowX: 'auto'
-  },
-  table: {
-    minWidth: 700
   }
 }
 
-let id = 0
-function createData(name, calories, fat, carbs, protein) {
-  id += 1
-  return { id, name, calories, fat, carbs, protein }
-}
+const TABLE_COLUMNS = [
+  {
+    key: 'name',
+    label: 'Dessert (100g serving)',
+  }, {
+    key: 'calories',
+    label: 'Calories',
+  },
+];
 
-const data = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9)
-]
+const TABLE_DATA = [
+  {
+    name: 'Frozen yogurt',
+    calories: '159',
+    fat: '6.0',
+    carbs: '24',
+  }, {
+    name: 'Ice cream sandwich',
+    calories: '159',
+    fat: '6.0',
+    carbs: '24',
+  },
+];
 
 class SimpleTable extends Component {
   render() {
-    const { classes } = this.props
+    const { classes, data } = this.props
 
     return (
       <Paper className={classes.root}>
-        <Table className={classes.table}>
-          <TableHead>
-            <TableRow>
-              <TableCell>Dessert (100g serving)</TableCell>
-              <TableCell numeric>Calories</TableCell>
-              <TableCell numeric>Fat (g)</TableCell>
-              <TableCell numeric>Carbs (g)</TableCell>
-              <TableCell numeric>Protein (g)</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data.map((n) => {
-              return (
-                <TableRow key={n.id}>
-                  <TableCell component='th' scope='row'>
-                    {n.name}
-                  </TableCell>
-                  <TableCell numeric>{n.calories}</TableCell>
-                  <TableCell numeric>{n.fat}</TableCell>
-                  <TableCell numeric>{n.carbs}</TableCell>
-                  <TableCell numeric>{n.protein}</TableCell>
-                </TableRow>
-              )
-            })}
-          </TableBody>
-        </Table>
+        <MuiThemeProvider>
+          <DataTables
+            height={'auto'}
+            selectable={false}
+            columns={TABLE_COLUMNS}
+            data={data}
+            showCheckboxes={false}
+            page={1}
+            count={100}
+          />
+        </MuiThemeProvider>
       </Paper>
     )
   }
