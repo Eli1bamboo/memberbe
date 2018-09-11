@@ -18,6 +18,12 @@ import Badge from '@material-ui/core/Badge'
 import MenuIcon from '@material-ui/icons/Menu'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import NotificationsIcon from '@material-ui/icons/Notifications'
+import Avatar from '@material-ui/core/Avatar'
+import VerifiedUserIcon from '@material-ui/icons/VerifiedUser'
+import ClearIcon from '@material-ui/icons/Clear'
+import green from '@material-ui/core/colors/green'
+import red from '@material-ui/core/colors/red'
+
 import Navigation from '../../Components/Navigation'
 
 import UserCard from './UserCard'
@@ -95,12 +101,31 @@ const styles = (theme) => ({
   },
   tableContainer: {
     height: 320
+  },
+  greenAvatar: {
+    margin: '10px 10px 10px 0',
+    color: '#fff',
+    backgroundColor: green[500]
+  },
+  redAvatar: {
+    margin: '10px 10px 10px 0',
+    color: '#fff',
+    backgroundColor: red[500]
+  },
+  userHeader: {
+    marginBottom: '15px',
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center'
   }
 })
 
 class UserProfile extends Component {
-  state = {
-    open: true
+  constructor (props) {
+    super()
+    this.state = {
+      open: true
+    }
   }
 
   handleDrawerOpen = () => {
@@ -114,7 +139,7 @@ class UserProfile extends Component {
   render () {
     const { classes, login } = this.props
 
-    const { active, createdAt, email, firstName, lastName, _id } = login
+    const { active, email } = login.user
 
     return (
       <React.Fragment>
@@ -177,11 +202,20 @@ class UserProfile extends Component {
           </Drawer>
           <main className={classes.content}>
             <div className={classes.appBarSpacer} />
-            <Typography variant='display1' gutterBottom>
-              User
-            </Typography>
+            <div className={classes.userHeader}>
+              {active ? (
+                <Avatar className={classes.greenAvatar}>
+                  <VerifiedUserIcon />
+                </Avatar>
+              ) : (
+                <Avatar className={classes.redAvatar}>
+                  <ClearIcon />
+                </Avatar>
+              )}
+              <Typography variant='display1'>{email}</Typography>
+            </div>
             <div className={classes.tableContainer}>
-              <UserCard />
+              <UserCard data={login.user} />
             </div>
           </main>
         </div>

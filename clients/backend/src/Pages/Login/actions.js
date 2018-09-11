@@ -24,7 +24,7 @@ export const loginUser = (email, password) => async (dispatch) => {
         }
 
         if (!isUserEmpty) {
-          localStorage.setItem('user', response.data.user)
+          localStorage.setItem('user', JSON.stringify(response.data.user))
         }
 
         dispatch({

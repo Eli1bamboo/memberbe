@@ -26,28 +26,28 @@ const styles = {
 }
 
 function UserCard (props) {
-  const { classes } = props
+  const { classes, data } = props
 
+  console.log(data)
   return (
     <Card className={classes.card}>
       <CardContent>
-        <Typography className={classes.title} color='textSecondary'>
-          Word of the Day
-        </Typography>
+        <Typography className={classes.title} color='textSecondary' />
         <Typography variant='headline' component='h2'>
-          be lent
+          {data.firstName} {data.lastName}
         </Typography>
         <Typography className={classes.pos} color='textSecondary'>
-          adjective
+          id: {data._id}
         </Typography>
         <Typography component='p'>
-          well meaning and kindly.
+          Role: {data.roles[0]}
           <br />
-          {'"a benevolent smile"'}
+          Date of creation: {data.createdAt}
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size='small'>Learn More</Button>
+        <Button size='small'>Remove User</Button>
+        <Button size='small'>Edit User</Button>
       </CardActions>
     </Card>
   )

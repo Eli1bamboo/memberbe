@@ -3,7 +3,10 @@ import { LOGIN_USER, LOGIN_FAILED } from './types'
 const initialState = {
   success: null,
   message: null,
-  user: {}
+  user:
+    localStorage.getItem('user') && localStorage.getItem('user').length
+      ? JSON.parse(localStorage.getItem('user'))
+      : {}
 }
 
 export default function reducer (state = initialState, action) {
