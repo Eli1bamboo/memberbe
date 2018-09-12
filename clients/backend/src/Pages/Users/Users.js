@@ -125,6 +125,11 @@ class Users extends Component {
     fetchUsers()
   }
 
+  handleCellClick = (rowIndex, columnIndex, row, column) => {
+    const { history } = this.props
+    history.push(`users/${row._id}`)
+  }
+
   render() {
     const { classes, users } = this.props
     const { open } = this.state
@@ -179,6 +184,7 @@ class Users extends Component {
                     }
                   ]
                 }
+                onCellClick={this.handleCellClick}
               />
             </div>
             <Button variant="fab" className={classes.fab} color="primary">

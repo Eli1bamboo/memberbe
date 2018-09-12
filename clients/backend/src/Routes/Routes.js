@@ -9,12 +9,13 @@ import Users from '../Pages/Users'
 import UserProfile from '../Pages/UserProfile'
 
 class Routes extends Component {
-  render () {
+  render() {
     return (
       <Switch>
         <Route exact path='/' component={Login} />
         <PrivateRoute exact path='/dashboard' component={Dashboard} />
         <PrivateRoute exact path='/users' component={Users} />
+        <PrivateRoute exact path='/users/:userId' component={UserProfile} />
         <PrivateRoute exact path='/user-profile' component={UserProfile} />
       </Switch>
     )

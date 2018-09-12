@@ -12,7 +12,7 @@ import PeopleIcon from '@material-ui/icons/People'
 import LogoutButton from '../LogoutButton'
 
 class Navigation extends Component {
-  render () {
+  render() {
     return (
       <Fragment>
         <List>
@@ -44,7 +44,9 @@ class Navigation extends Component {
         <Divider />
         <List>
           <ListSubheader inset>Saved reports</ListSubheader>
-          <LogoutButton />
+          <ListItem button>
+            <LogoutButton />
+          </ListItem>
         </List>
       </Fragment>
     )

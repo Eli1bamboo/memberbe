@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import { withRouter, Link } from 'react-router-dom'
+
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 
@@ -21,6 +23,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
 import ProgressBar from '../ProgressBar'
+import LogoutButton from '../LogoutButton'
+
 import { Divider } from '../../../node_modules/@material-ui/core';
 
 const drawerWidth = 240
@@ -102,6 +106,11 @@ class TopBar extends Component {
     this.setState({ anchorEl: null })
   }
 
+  navigateTo = (url) => {
+    const { history } = this.props
+    history.push(url)
+  }
+
   render() {
     const { classes, pageTitle } = this.props
     const { anchorEl, isSearching } = this.state
@@ -160,17 +169,14 @@ class TopBar extends Component {
               onClose={this.handleClose}
             >
               <MenuItem onClick={this.handleClose} className={classes.menuItem}>
-                <ListItemIcon className={classes.icon}>
+                <ListItemIcon className={classes.icon} onClick={() => this.navigateTo('user-profile')}>
                   <PersonIcon />
                 </ListItemIcon>
-                <ListItemText classes={{ primary: classes.primary }} inset primary="My Profile" />
+                <ListItemText classes={{ primary: classes.primary }} inset primary="My Profile" onClick={() => this.navigateTo('user-profile')} />
               </MenuItem>
               <Divider />
               <MenuItem onClick={this.handleClose} className={classes.menuItem}>
-                <ListItemIcon className={classes.icon}>
-                  <PowerSettingsNew />
-                </ListItemIcon>
-                <ListItemText classes={{ primary: classes.primary }} inset primary="Log out" />
+                <LogoutButton />
               </MenuItem>
             </Menu>
           </div>
@@ -195,4 +201,4 @@ const mapStateToProps = (state) => {
 
 const enhance = compose(withStyles(styles), connect(mapStateToProps))
 
-export default enhance(TopBar)
+export default enhance(withRouter(TopBar))

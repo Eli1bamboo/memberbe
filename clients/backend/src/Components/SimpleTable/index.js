@@ -12,19 +12,17 @@ const styles = {
 }
 
 class SimpleTable extends Component {
-  render () {
-    const { classes, data, columns } = this.props
+  render() {
+    const { classes, data, columns, onCellClick } = this.props
 
     return (
       <Paper className={classes.root}>
         <MuiThemeProvider>
           <DataTables
-            height={'auto'}
-            selectable={true}
             columns={columns}
             data={data}
-            showCheckboxes={false}
             page={1}
+            onCellClick={(rowIndex, columnIndex, row, column) => onCellClick(rowIndex, columnIndex, row, column)}
             count={data && data.length ? data.length : 0}
           />
         </MuiThemeProvider>

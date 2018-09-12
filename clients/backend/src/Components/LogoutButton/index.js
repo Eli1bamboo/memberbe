@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { withRouter } from 'react-router-dom'
 
 import ListItem from '@material-ui/core/ListItem'
@@ -27,12 +27,12 @@ class LogoutButton extends Component {
 
   render() {
     return (
-      <ListItem button onClick={this.handleLogout}>
-        <ListItemIcon>
+      <Fragment>
+        <ListItemIcon onClick={this.handleLogout}>
           <PowerSettingsNew />
         </ListItemIcon>
-        <ListItemText primary='Log out' />
-      </ListItem>
+        <ListItemText primary='Log out' onClick={this.handleLogout} />
+      </Fragment>
     )
   }
 }
