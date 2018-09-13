@@ -1,14 +1,12 @@
 import React, { Component, Fragment } from 'react'
 import { withRouter } from 'react-router-dom'
 
-import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
-
-import PowerSettingsNew from '@material-ui/icons/PowerSettingsNew'
+import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew'
 
 class LogoutButton extends Component {
-  shouldComponentUpdate() {
+  shouldComponentUpdate () {
     return true
   }
 
@@ -25,11 +23,11 @@ class LogoutButton extends Component {
     history.push('/')
   }
 
-  render() {
+  render () {
     return (
       <Fragment>
         <ListItemIcon onClick={this.handleLogout}>
-          <PowerSettingsNew />
+          <PowerSettingsNewIcon />
         </ListItemIcon>
         <ListItemText primary='Log out' onClick={this.handleLogout} />
       </Fragment>

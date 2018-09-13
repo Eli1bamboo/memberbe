@@ -28,7 +28,6 @@ const styles = {
 function UserCard (props) {
   const { classes, data } = props
 
-  console.log(data)
   return (
     <Card className={classes.card}>
       <CardContent>

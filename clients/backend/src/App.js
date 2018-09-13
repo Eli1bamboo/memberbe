@@ -7,7 +7,7 @@ import thunk from 'redux-thunk'
 
 import backendStore from './reducers'
 
-import Routes from './Routes'
+import Layout from './Layout'
 
 let store = createStore(
   backendStore,
@@ -22,7 +22,7 @@ class App extends Component {
     return (
       <Provider store={store}>
         <Router>
-          <Route component={Routes} />
+          <Route component={Layout} />
         </Router>
       </Provider>
     )

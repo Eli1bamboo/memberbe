@@ -8,13 +8,17 @@ import classNames from 'classnames'
 import { withStyles } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Drawer from '@material-ui/core/Drawer'
-
 import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
 import IconButton from '@material-ui/core/IconButton'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
-import Navigation from '../../Components/Navigation'
-import TopBar from '../../Components/TopBar'
+
+import Navigation from '../Components/Navigation'
+import TopBar from '../Components/TopBar'
+
+import Routes from '../Routes'
+
+import _isEmpty from 'lodash/isEmpty'
 
 const drawerWidth = 240
 
@@ -92,15 +96,25 @@ const styles = (theme) => ({
   }
 })
 
-class Dashboard extends Component {
+class Layout extends Component {
   constructor (props) {
     super()
-
+    const { login } = props
     this.state = {
-      open: true
+      open: true,
+      isAuth: login.isAuth
     }
   }
 
+  componentWillReceiveProps (nextProps) {
+    const { login } = nextProps
+
+    if (login.isAuth) {
+      this.setState({
+        isAuth: true
+      })
+    }
+  }
   handleDrawerOpen = () => {
     this.setState({ open: true })
   }
@@ -110,21 +124,56 @@ class Dashboard extends Component {
   }
 
   render () {
-    const { classes, login } = this.props
-    const { open } = this.state
+    const { classes } = this.props
+    const { open, isAuth } = this.state
 
     return (
-      <React.Fragment>
-        <div className={classes.appBarSpacer} />
-        <Typography variant='display1' gutterBottom>
-          Welcome
-        </Typography>
-      </React.Fragment>
+      <div>
+        {isAuth ? (
+          <React.Fragment>
+            <CssBaseline />
+            <div className={classes.root}>
+              <TopBar
+                pageTitle={'Layout'}
+                open={open}
+                handleDrawerOpen={this.handleDrawerOpen}
+              />
+              <Drawer
+                variant='permanent'
+                classes={{
+                  paper: classNames(
+                    classes.drawerPaper,
+                    !open && classes.drawerPaperClose
+                  )
+                }}
+                open={open}
+              >
+                <div className={classes.toolbarIcon}>
+                  <IconButton onClick={this.handleDrawerClose}>
+                    <ChevronLeftIcon />
+                  </IconButton>
+                </div>
+                <Divider />
+                <Navigation />
+              </Drawer>
+              <main className={classes.content}>
+                <div className={classes.appBarSpacer} />
+                <Typography variant='display1' gutterBottom>
+                  Welcome
+                </Typography>
+                <Routes />
+              </main>
+            </div>
+          </React.Fragment>
+        ) : (
+          <Routes />
+        )}
+      </div>
     )
   }
 }
 
-Dashboard.propTypes = {
+Layout.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
@@ -138,4 +187,4 @@ const mapStateToProps = (state) => {
 
 const enhance = compose(withStyles(styles), connect(mapStateToProps))
 
-export default enhance(Dashboard)
+export default enhance(Layout)

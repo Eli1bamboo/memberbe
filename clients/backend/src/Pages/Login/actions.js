@@ -1,12 +1,18 @@
 import axios from 'axios'
 import _isEmpty from 'lodash/isEmpty'
 
-import { LOGIN_USER, LOGIN_FAILED } from './types'
+import { LOGING_USER, LOGED_USER, LOGIN_USER, LOGIN_FAILED } from './types'
 
 const api = 'http://localhost:9020/users/login'
 
 export const loginUser = (email, password) => async (dispatch) => {
   try {
+    dispatch({
+      type: LOGING_USER,
+      payload: {
+        isLoading: true
+      }
+    })
     await axios
       .post(api, {
         email,
@@ -25,17 +31,30 @@ export const loginUser = (email, password) => async (dispatch) => {
 
         if (!isUserEmpty) {
           localStorage.setItem('user', JSON.stringify(response.data.user))
-        }
+          localStorage.setItem('isAuth', true)
 
-        dispatch({
-          type: LOGIN_USER,
-          payload: {
-            token: response.data.token,
-            user: response.data.user,
-            success: response.data.status,
-            message
-          }
-        })
+          dispatch({
+            type: LOGED_USER,
+            payload: {
+              token: response.data.token,
+              user: response.data.user,
+              success: response.data.status,
+              isLoading: false,
+              isAuth: true,
+              message
+            }
+          })
+        } else {
+          dispatch({
+            type: LOGIN_FAILED,
+            payload: {
+              success: response.data.status,
+              isLoading: false,
+              isAuth: false,
+              message
+            }
+          })
+        }
       })
       .catch((error) => {
         console.log('error', error)
