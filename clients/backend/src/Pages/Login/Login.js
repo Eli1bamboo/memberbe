@@ -67,9 +67,9 @@ class Login extends Component {
   componentWillReceiveProps (nextProps) {
     const { history } = this.props
 
-    const hasToken = !_isEmpty(localStorage.getItem('token'))
+    const isAuth = localStorage.getItem('isAuth')
 
-    if (hasToken) {
+    if (isAuth) {
       history.push('/dashboard')
     }
 

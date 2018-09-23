@@ -1,14 +1,14 @@
 import axios from 'axios'
 import _isEmpty from 'lodash/isEmpty'
 
-import { LOGING_USER, LOGED_USER, LOGIN_USER, LOGIN_FAILED } from './types'
+import { LOGIN_USER, LOGED_USER, LOGIN_FAILED, LOGOUT_USER } from './types'
 
 const api = 'http://localhost:9020/users/login'
 
 export const loginUser = (email, password) => async (dispatch) => {
   try {
     dispatch({
-      type: LOGING_USER,
+      type: LOGIN_USER,
       payload: {
         isLoading: true
       }
@@ -67,6 +67,27 @@ export const loginUser = (email, password) => async (dispatch) => {
       payload: {
         success: false,
         message: 'Unable to connect to authentication server'
+      }
+    })
+  }
+}
+
+export const logoutUser = () => async (dispatch) => {
+  const isTokenEmpty = _isEmpty(localStorage.setItem('token'))
+  const isUserEmpty = _isEmpty(localStorage.setItem('user'))
+
+  if (!isTokenEmpty) {
+    localStorage.removeItem('token')
+  }
+
+  if (!isUserEmpty) {
+    localStorage.removeItem('user')
+    localStorage.removeItem('isAuth')
+
+    dispatch({
+      type: LOGOUT_USER,
+      payload: {
+        isAuth: false
       }
     })
   }

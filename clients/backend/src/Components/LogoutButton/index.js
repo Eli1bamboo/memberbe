@@ -1,4 +1,9 @@
 import React, { Component, Fragment } from 'react'
+
+import { compose } from 'redux'
+import { connect } from 'react-redux'
+import { loginUser } from '../../Pages/Login/actions'
+
 import { withRouter } from 'react-router-dom'
 
 import ListItemIcon from '@material-ui/core/ListItemIcon'
@@ -13,6 +18,7 @@ class LogoutButton extends Component {
   doLogout = () => {
     localStorage.removeItem('token')
     localStorage.removeItem('user')
+    localStorage.removeItem('isAuth')
   }
 
   handleLogout = () => {
@@ -35,4 +41,18 @@ class LogoutButton extends Component {
   }
 }
 
-export default withRouter(LogoutButton)
+const mapStateToProps = (state) => {
+  const { login } = state
+
+  return {
+    login
+  }
+}
+
+const mapDispatchToProps = {
+  loginUser
+}
+
+const enhance = compose(connect(mapStateToProps, mapDispatchToProps))
+
+export default enhance(LogoutButton)

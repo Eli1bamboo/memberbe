@@ -18,8 +18,6 @@ import TopBar from '../Components/TopBar'
 
 import Routes from '../Routes'
 
-import _isEmpty from 'lodash/isEmpty'
-
 const drawerWidth = 240
 
 const styles = (theme) => ({
@@ -100,21 +98,34 @@ class Layout extends Component {
   constructor (props) {
     super()
     const { login } = props
+
     this.state = {
-      open: true,
-      isAuth: login.isAuth
+      open: true
+    }
+  }
+
+  componentWillMount () {
+    const { history, login } = this.props
+
+    const isAuth = login.isAuth
+
+    if (isAuth) {
+      history.push('/dashboard')
     }
   }
 
   componentWillReceiveProps (nextProps) {
-    const { login } = nextProps
+    const { login } = this.props
 
-    if (login.isAuth) {
+    const isAuth = login.isAuth
+
+    if (isAuth) {
       this.setState({
         isAuth: true
       })
     }
   }
+
   handleDrawerOpen = () => {
     this.setState({ open: true })
   }

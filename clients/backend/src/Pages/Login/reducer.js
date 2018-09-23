@@ -1,4 +1,4 @@
-import { LOGING_USER, LOGED_USER, LOGIN_USER, LOGIN_FAILED } from './types'
+import { LOGIN_USER, LOGED_USER, LOGIN_FAILED, LOGOUT_USER } from './types'
 
 const initialState = {
   success: null,
@@ -15,7 +15,7 @@ const initialState = {
 
 export default function reducer (state = initialState, action) {
   switch (action.type) {
-    case LOGING_USER:
+    case LOGIN_USER:
       return {
         isLoading: action.payload.isLoading
       }
@@ -28,6 +28,8 @@ export default function reducer (state = initialState, action) {
       }
     case LOGIN_FAILED:
       return { success: false, message: action.payload.message }
+    case LOGOUT_USER:
+      return { isAuth: action.payload.isAuth }
     default:
       return state
   }
