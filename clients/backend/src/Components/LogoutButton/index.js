@@ -4,8 +4,6 @@ import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { loginUser } from '../../Pages/Login/actions'
 
-import { withRouter } from 'react-router-dom'
-
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew'

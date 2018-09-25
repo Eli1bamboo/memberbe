@@ -97,7 +97,6 @@ const styles = (theme) => ({
 class Layout extends Component {
   constructor (props) {
     super()
-    const { login } = props
 
     this.state = {
       open: true
