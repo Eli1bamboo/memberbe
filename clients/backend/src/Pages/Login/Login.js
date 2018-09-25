@@ -16,6 +16,8 @@ import LockIcon from '@material-ui/icons/LockOutlined'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import Snackbar from '@material-ui/core/Snackbar'
+import Fade from '@material-ui/core/Fade'
+
 import withStyles from '@material-ui/core/styles/withStyles'
 
 import _isEmpty from 'lodash/isEmpty'
@@ -58,12 +60,19 @@ class Login extends Component {
     super(props)
 
     this.state = {
+      isMounted: false,
       openSnackbar: false,
       errorMsg: '',
       formData: { email: '', password: '' }
     }
   }
 
+  componentDidMount(){
+    this.setState({
+      isMounted: true
+    })
+  }
+  
   componentWillReceiveProps (nextProps) {
     const { history } = this.props
 
@@ -104,12 +113,13 @@ class Login extends Component {
 
   render () {
     const { classes } = this.props
-    const { formData, errorMsg, openSnackbar } = this.state
+    const { formData, errorMsg, openSnackbar, isMounted } = this.state
 
     return (
       <React.Fragment>
         <CssBaseline />
         <main className={classes.layout}>
+        <Fade in={isMounted}>
           <Paper className={classes.paper}>
             <Avatar className={classes.avatar}>
               <LockIcon />
@@ -153,6 +163,7 @@ class Login extends Component {
               </Button>
             </form>
           </Paper>
+          </Fade>
         </main>
         <Snackbar
           anchorOrigin={{ vertical: 'top', horizontal: 'center' }}

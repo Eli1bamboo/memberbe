@@ -1,45 +1,45 @@
-import React, { Component } from 'react'
+import React, { Component } from "react"
 
-import { compose } from 'redux'
-import { connect } from 'react-redux'
-import { fetchUsers } from './actions'
+import { compose } from "redux"
+import { connect } from "react-redux"
+import { fetchUsers } from "./actions"
 
-import PropTypes from 'prop-types'
-import classNames from 'classnames'
-import { withStyles } from '@material-ui/core/styles'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import Drawer from '@material-ui/core/Drawer'
-import Typography from '@material-ui/core/Typography'
-import IconButton from '@material-ui/core/IconButton'
-import Divider from '@material-ui/core/Divider'
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
-import Navigation from '../../Components/Navigation'
+import PropTypes from "prop-types"
+import classNames from "classnames"
+import { withStyles } from "@material-ui/core/styles"
+import CssBaseline from "@material-ui/core/CssBaseline"
+import Drawer from "@material-ui/core/Drawer"
+import Typography from "@material-ui/core/Typography"
+import IconButton from "@material-ui/core/IconButton"
+import Divider from "@material-ui/core/Divider"
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft"
+import Navigation from "../../Components/Navigation"
 
-import Button from '@material-ui/core/Button';
-import AddIcon from '@material-ui/icons/Add';
+import Button from "@material-ui/core/Button"
+import AddIcon from "@material-ui/icons/Add"
 
-import TopBar from '../../Components/TopBar'
-import SimpleTable from '../../Components/SimpleTable'
+import TopBar from "../../Components/TopBar"
+import SimpleTable from "../../Components/SimpleTable"
 
 const drawerWidth = 240
 
-const styles = (theme) => ({
+const styles = theme => ({
   root: {
-    display: 'flex'
+    display: "flex"
   },
   toolbar: {
     paddingRight: 24 // keep right padding when drawer closed
   },
   toolbarIcon: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: '0 8px',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    padding: "0 8px",
     ...theme.mixins.toolbar
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
+    transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
     })
@@ -47,7 +47,7 @@ const styles = (theme) => ({
   appBarShift: {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
+    transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen
     })
@@ -57,28 +57,28 @@ const styles = (theme) => ({
     marginRight: 36
   },
   menuButtonHidden: {
-    display: 'none'
+    display: "none"
   },
   title: {
     flexGrow: 1
   },
   drawerPaper: {
-    position: 'relative',
-    whiteSpace: 'nowrap',
+    position: "relative",
+    whiteSpace: "nowrap",
     width: drawerWidth,
-    transition: theme.transitions.create('width', {
+    transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen
     })
   },
   drawerPaperClose: {
-    overflowX: 'hidden',
-    transition: theme.transitions.create('width', {
+    overflowX: "hidden",
+    transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
     }),
     width: theme.spacing.unit * 7,
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up("sm")]: {
       width: theme.spacing.unit * 9
     }
   },
@@ -86,8 +86,8 @@ const styles = (theme) => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing.unit * 3,
-    height: '100vh',
-    overflow: 'auto'
+    height: "100vh",
+    overflow: "auto"
   },
   chartContainer: {
     marginLeft: -22
@@ -96,15 +96,19 @@ const styles = (theme) => ({
     height: 320
   },
   fab: {
-    position: 'absolute',
+    position: "absolute",
     bottom: theme.spacing.unit * 2,
-    right: theme.spacing.unit * 2,
-  },
+    right: theme.spacing.unit * 2
+  }
 })
 
 class Users extends Component {
-  state = {
-    open: true
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      open: true
+    }
   }
 
   handleDrawerOpen = () => {
@@ -139,12 +143,12 @@ class Users extends Component {
         <CssBaseline />
         <div className={classes.root}>
           <TopBar
-            pageTitle={'Users'}
+            pageTitle={"Users"}
             open={open}
             handleDrawerOpen={this.handleDrawerOpen}
           />
           <Drawer
-            variant='permanent'
+            variant="permanent"
             classes={{
               paper: classNames(
                 classes.drawerPaper,
@@ -163,27 +167,26 @@ class Users extends Component {
           </Drawer>
           <main className={classes.content}>
             <div className={classes.appBarSpacer} />
-            <Typography variant='display1' gutterBottom>
+            <Typography variant="display1" gutterBottom>
               Users
             </Typography>
             <div className={classes.tableContainer}>
               <SimpleTable
                 data={users.users}
-                columns={
-                  [
-                    {
-                      key: 'firstName',
-                      label: 'First Name'
-                    }, {
-                      key: 'lastName',
-                      label: 'Last Name'
-                    },
-                    {
-                      key: 'email',
-                      label: 'Email'
-                    }
-                  ]
-                }
+                columns={[
+                  {
+                    key: "firstName",
+                    label: "First Name"
+                  },
+                  {
+                    key: "lastName",
+                    label: "Last Name"
+                  },
+                  {
+                    key: "email",
+                    label: "Email"
+                  }
+                ]}
                 onCellClick={this.handleCellClick}
               />
             </div>
@@ -201,7 +204,7 @@ Users.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const { users } = state
 
   return {
@@ -215,7 +218,10 @@ const mapDispatchToProps = {
 
 const enhance = compose(
   withStyles(styles),
-  connect(mapStateToProps, mapDispatchToProps)
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
 )
 
 export default enhance(Users)
