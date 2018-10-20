@@ -140,61 +140,33 @@ class Users extends Component {
 
     return (
       <React.Fragment>
-        <CssBaseline />
-        <div className={classes.root}>
-          <TopBar
-            pageTitle={'Users'}
-            open={open}
-            handleDrawerOpen={this.handleDrawerOpen}
+        <div className={classes.appBarSpacer} />
+        <Typography variant="display1" gutterBottom>
+          Users
+        </Typography>
+        <div className={classes.tableContainer}>
+          <SimpleTable
+            data={users.users}
+            columns={[
+              {
+                key: 'firstName',
+                label: 'First Name'
+              },
+              {
+                key: 'lastName',
+                label: 'Last Name'
+              },
+              {
+                key: 'email',
+                label: 'Email'
+              }
+            ]}
+            onCellClick={this.handleCellClick}
           />
-          <Drawer
-            variant="permanent"
-            classes={{
-              paper: classNames(
-                classes.drawerPaper,
-                !open && classes.drawerPaperClose
-              )
-            }}
-            open={open}
-          >
-            <div className={classes.toolbarIcon}>
-              <IconButton onClick={this.handleDrawerClose}>
-                <ChevronLeftIcon />
-              </IconButton>
-            </div>
-            <Divider />
-            <Navigation />
-          </Drawer>
-          <main className={classes.content}>
-            <div className={classes.appBarSpacer} />
-            <Typography variant="display1" gutterBottom>
-              Users
-            </Typography>
-            <div className={classes.tableContainer}>
-              <SimpleTable
-                data={users.users}
-                columns={[
-                  {
-                    key: 'firstName',
-                    label: 'First Name'
-                  },
-                  {
-                    key: 'lastName',
-                    label: 'Last Name'
-                  },
-                  {
-                    key: 'email',
-                    label: 'Email'
-                  }
-                ]}
-                onCellClick={this.handleCellClick}
-              />
-            </div>
-            <Button variant="fab" className={classes.fab} color="primary">
-              <AddIcon />
-            </Button>
-          </main>
         </div>
+        <Button variant="fab" className={classes.fab} color="primary">
+          <AddIcon />
+        </Button>
       </React.Fragment>
     )
   }

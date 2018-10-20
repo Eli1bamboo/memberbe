@@ -36,7 +36,7 @@ const styles = (theme) => ({
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create([ 'width', 'margin' ], {
+    transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
     })
@@ -44,7 +44,7 @@ const styles = (theme) => ({
   appBarShift: {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create([ 'width', 'margin' ], {
+    transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen
     })
@@ -95,7 +95,7 @@ const styles = (theme) => ({
 })
 
 class Layout extends Component {
-  constructor (props) {
+  constructor(props) {
     super()
 
     this.state = {
@@ -103,7 +103,7 @@ class Layout extends Component {
     }
   }
 
-  componentWillMount () {
+  componentWillMount() {
     const { history, login } = this.props
 
     const isAuth = login.isAuth
@@ -113,7 +113,7 @@ class Layout extends Component {
     }
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     const { login } = this.props
 
     const isAuth = login.isAuth
@@ -133,7 +133,7 @@ class Layout extends Component {
     this.setState({ open: false })
   }
 
-  render () {
+  render() {
     const { classes } = this.props
     const { open, isAuth } = this.state
 
@@ -167,17 +167,14 @@ class Layout extends Component {
                 <Navigation />
               </Drawer>
               <main className={classes.content}>
-                <div className={classes.appBarSpacer} />
-                <Typography variant='display1' gutterBottom>
-                  Welcome
-                </Typography>
+                {console.log(this.props)}
                 <Routes />
               </main>
             </div>
           </React.Fragment>
         ) : (
-          <Routes />
-        )}
+            <Routes />
+          )}
       </div>
     )
   }

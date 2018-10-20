@@ -9,7 +9,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew'
 
 class LogoutButton extends Component {
-  shouldComponentUpdate () {
+  shouldComponentUpdate() {
     return true
   }
 
@@ -21,13 +21,11 @@ class LogoutButton extends Component {
 
   handleLogout = () => {
     const { history } = this.props
-
     this.doLogout()
-
     history.push('/')
   }
 
-  render () {
+  render() {
     return (
       <Fragment>
         <ListItemIcon onClick={this.handleLogout}>

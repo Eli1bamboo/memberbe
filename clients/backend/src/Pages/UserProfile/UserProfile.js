@@ -46,7 +46,7 @@ const styles = (theme) => ({
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create([ 'width', 'margin' ], {
+    transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
     })
@@ -54,7 +54,7 @@ const styles = (theme) => ({
   appBarShift: {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create([ 'width', 'margin' ], {
+    transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen
     })
@@ -121,7 +121,7 @@ const styles = (theme) => ({
 })
 
 class UserProfile extends Component {
-  constructor (props) {
+  constructor(props) {
     super()
     this.state = {
       open: true
@@ -136,88 +136,28 @@ class UserProfile extends Component {
     this.setState({ open: false })
   }
 
-  render () {
+  render() {
     const { classes, login } = this.props
 
     const { active, email } = login.user
 
     return (
       <React.Fragment>
-        <CssBaseline />
-        <div className={classes.root}>
-          <AppBar
-            position='absolute'
-            className={classNames(
-              classes.appBar,
-              this.state.open && classes.appBarShift
+        <div className={classes.appBarSpacer} />
+        <div className={classes.userHeader}>
+          {active ? (
+            <Avatar className={classes.greenAvatar}>
+              <VerifiedUserIcon />
+            </Avatar>
+          ) : (
+              <Avatar className={classes.redAvatar}>
+                <ClearIcon />
+              </Avatar>
             )}
-          >
-            <Toolbar
-              disableGutters={!this.state.open}
-              className={classes.toolbar}
-            >
-              <IconButton
-                color='inherit'
-                aria-label='Open drawer'
-                onClick={this.handleDrawerOpen}
-                className={classNames(
-                  classes.menuButton,
-                  this.state.open && classes.menuButtonHidden
-                )}
-              >
-                <MenuIcon />
-              </IconButton>
-              <Typography
-                variant='title'
-                color='inherit'
-                noWrap
-                className={classes.title}
-              >
-                User Profile
-              </Typography>
-              <IconButton color='inherit'>
-                <Badge badgeContent={4} color='secondary'>
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton>
-            </Toolbar>
-          </AppBar>
-          <Drawer
-            variant='permanent'
-            classes={{
-              paper: classNames(
-                classes.drawerPaper,
-                !this.state.open && classes.drawerPaperClose
-              )
-            }}
-            open={this.state.open}
-          >
-            <div className={classes.toolbarIcon}>
-              <IconButton onClick={this.handleDrawerClose}>
-                <ChevronLeftIcon />
-              </IconButton>
-            </div>
-            <Divider />
-            <Navigation />
-          </Drawer>
-          <main className={classes.content}>
-            <div className={classes.appBarSpacer} />
-            <div className={classes.userHeader}>
-              {active ? (
-                <Avatar className={classes.greenAvatar}>
-                  <VerifiedUserIcon />
-                </Avatar>
-              ) : (
-                <Avatar className={classes.redAvatar}>
-                  <ClearIcon />
-                </Avatar>
-              )}
-              <Typography variant='display1'>{email}</Typography>
-            </div>
-            <div className={classes.tableContainer}>
-              <UserCard data={login.user} />
-            </div>
-          </main>
+          <Typography variant='display1'>{email}</Typography>
+        </div>
+        <div className={classes.tableContainer}>
+          <UserCard data={login.user} />
         </div>
       </React.Fragment>
     )
@@ -228,7 +168,7 @@ UserProfile.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-function mapStateToProps ({ login }) {
+function mapStateToProps({ login }) {
   return { login }
 }
 

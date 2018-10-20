@@ -1,5 +1,12 @@
 import React, { Component, Fragment } from 'react'
-import { Link } from 'react-router-dom'
+
+import { withRouter, Link } from 'react-router-dom'
+
+import { compose } from 'redux'
+import { connect } from 'react-redux'
+
+import { withStyles } from '@material-ui/core/styles'
+
 import Divider from '@material-ui/core/Divider'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -11,8 +18,19 @@ import PeopleIcon from '@material-ui/icons/People'
 
 import LogoutButton from '../LogoutButton'
 
+const styles = {
+  root: {
+    width: '100%',
+    overflowX: 'auto'
+  }
+}
+
 class Navigation extends Component {
   render() {
+
+    console.log("NAVIGATION PROPS");
+    console.log(this.props);
+
     return (
       <Fragment>
         <List>
@@ -45,7 +63,7 @@ class Navigation extends Component {
         <List>
           <ListSubheader inset>Saved reports</ListSubheader>
           <ListItem button>
-            <LogoutButton />
+            <LogoutButton history={this.props.history} />
           </ListItem>
         </List>
       </Fragment>
@@ -53,4 +71,15 @@ class Navigation extends Component {
   }
 }
 
-export default Navigation
+
+const mapStateToProps = (state) => {
+  const { users } = state
+
+  return {
+    users
+  }
+}
+
+const enhance = compose(withStyles(styles), connect(mapStateToProps))
+
+export default enhance(withRouter(Navigation))
