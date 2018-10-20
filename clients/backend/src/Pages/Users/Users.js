@@ -1,199 +1,182 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
-import { compose } from 'redux'
-import { connect } from 'react-redux'
-import { fetchUsers } from './actions'
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { fetchUsers } from './actions';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import AddIcon from '@material-ui/icons/Add';
 
-import PropTypes from 'prop-types'
-import classNames from 'classnames'
-import { withStyles } from '@material-ui/core/styles'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import Drawer from '@material-ui/core/Drawer'
-import Typography from '@material-ui/core/Typography'
-import IconButton from '@material-ui/core/IconButton'
-import Divider from '@material-ui/core/Divider'
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
-import Navigation from '../../Components/Navigation'
+import SimpleTable from '../../Components/SimpleTable';
 
-import Button from '@material-ui/core/Button'
-import AddIcon from '@material-ui/icons/Add'
+const drawerWidth = 240;
 
-import TopBar from '../../Components/TopBar'
-import SimpleTable from '../../Components/SimpleTable'
-
-const drawerWidth = 240
-
-const styles = theme => ({
-  root: {
-    display: 'flex'
-  },
-  toolbar: {
-    paddingRight: 24 // keep right padding when drawer closed
-  },
-  toolbarIcon: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: '0 8px',
-    ...theme.mixins.toolbar
-  },
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    })
-  },
-  appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    })
-  },
-  menuButton: {
-    marginLeft: 12,
-    marginRight: 36
-  },
-  menuButtonHidden: {
-    display: 'none'
-  },
-  title: {
-    flexGrow: 1
-  },
-  drawerPaper: {
-    position: 'relative',
-    whiteSpace: 'nowrap',
-    width: drawerWidth,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    })
-  },
-  drawerPaperClose: {
-    overflowX: 'hidden',
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    }),
-    width: theme.spacing.unit * 7,
-    [theme.breakpoints.up('sm')]: {
-      width: theme.spacing.unit * 9
-    }
-  },
-  appBarSpacer: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing.unit * 3,
-    height: '100vh',
-    overflow: 'auto'
-  },
-  chartContainer: {
-    marginLeft: -22
-  },
-  tableContainer: {
-    height: 320
-  },
-  fab: {
-    position: 'absolute',
-    bottom: theme.spacing.unit * 2,
-    right: theme.spacing.unit * 2
-  }
-})
+const styles = (theme) => ({
+	root: {
+		display: 'flex'
+	},
+	toolbar: {
+		paddingRight: 24 // keep right padding when drawer closed
+	},
+	toolbarIcon: {
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'flex-end',
+		padding: '0 8px',
+		...theme.mixins.toolbar
+	},
+	appBar: {
+		zIndex: theme.zIndex.drawer + 1,
+		transition: theme.transitions.create([ 'width', 'margin' ], {
+			easing: theme.transitions.easing.sharp,
+			duration: theme.transitions.duration.leavingScreen
+		})
+	},
+	appBarShift: {
+		marginLeft: drawerWidth,
+		width: `calc(100% - ${drawerWidth}px)`,
+		transition: theme.transitions.create([ 'width', 'margin' ], {
+			easing: theme.transitions.easing.sharp,
+			duration: theme.transitions.duration.enteringScreen
+		})
+	},
+	menuButton: {
+		marginLeft: 12,
+		marginRight: 36
+	},
+	menuButtonHidden: {
+		display: 'none'
+	},
+	title: {
+		flexGrow: 1
+	},
+	drawerPaper: {
+		position: 'relative',
+		whiteSpace: 'nowrap',
+		width: drawerWidth,
+		transition: theme.transitions.create('width', {
+			easing: theme.transitions.easing.sharp,
+			duration: theme.transitions.duration.enteringScreen
+		})
+	},
+	drawerPaperClose: {
+		overflowX: 'hidden',
+		transition: theme.transitions.create('width', {
+			easing: theme.transitions.easing.sharp,
+			duration: theme.transitions.duration.leavingScreen
+		}),
+		width: theme.spacing.unit * 7,
+		[theme.breakpoints.up('sm')]: {
+			width: theme.spacing.unit * 9
+		}
+	},
+	appBarSpacer: theme.mixins.toolbar,
+	content: {
+		flexGrow: 1,
+		padding: theme.spacing.unit * 3,
+		height: '100vh',
+		overflow: 'auto'
+	},
+	chartContainer: {
+		marginLeft: -22
+	},
+	tableContainer: {
+		height: 320
+	},
+	fab: {
+		position: 'absolute',
+		bottom: theme.spacing.unit * 2,
+		right: theme.spacing.unit * 2
+	}
+});
 
 class Users extends Component {
-  constructor(props) {
-    super(props)
+	constructor(props) {
+		super(props);
 
-    this.state = {
-      open: true
-    }
-  }
+		this.state = {
+			open: true
+		};
+	}
 
-  handleDrawerOpen = () => {
-    this.setState({ open: true })
-  }
+	handleDrawerOpen = () => {
+		this.setState({ open: true });
+	};
 
-  handleDrawerClose = () => {
-    this.setState({ open: false })
-  }
+	handleDrawerClose = () => {
+		this.setState({ open: false });
+	};
 
-  componentWillMount() {
-    this.refresh()
-  }
+	componentWillMount() {
+		this.refresh();
+	}
 
-  refresh = () => {
-    const { fetchUsers } = this.props
+	refresh = () => {
+		const { fetchUsers } = this.props;
 
-    fetchUsers()
-  }
+		fetchUsers();
+	};
 
-  handleCellClick = (rowIndex, columnIndex, row, column) => {
-    const { history } = this.props
-    history.push(`users/${row._id}`)
-  }
+	handleCellClick = (rowIndex, columnIndex, row, column) => {
+		const { history } = this.props;
+		history.push(`users/${row._id}`);
+	};
 
-  render() {
-    const { classes, users } = this.props
-    const { open } = this.state
+	render() {
+		const { classes, users } = this.props;
 
-    return (
-      <React.Fragment>
-        <div className={classes.appBarSpacer} />
-        <Typography variant="display1" gutterBottom>
-          Users
-        </Typography>
-        <div className={classes.tableContainer}>
-          <SimpleTable
-            data={users.users}
-            columns={[
-              {
-                key: 'firstName',
-                label: 'First Name'
-              },
-              {
-                key: 'lastName',
-                label: 'Last Name'
-              },
-              {
-                key: 'email',
-                label: 'Email'
-              }
-            ]}
-            onCellClick={this.handleCellClick}
-          />
-        </div>
-        <Button variant="fab" className={classes.fab} color="primary">
-          <AddIcon />
-        </Button>
-      </React.Fragment>
-    )
-  }
+		return (
+			<React.Fragment>
+				<div className={classes.appBarSpacer} />
+				<Typography variant="display1" gutterBottom>
+					Users
+				</Typography>
+				<div className={classes.tableContainer}>
+					<SimpleTable
+						data={users.users}
+						columns={[
+							{
+								key: 'firstName',
+								label: 'First Name'
+							},
+							{
+								key: 'lastName',
+								label: 'Last Name'
+							},
+							{
+								key: 'email',
+								label: 'Email'
+							}
+						]}
+						onCellClick={this.handleCellClick}
+					/>
+				</div>
+				<Button variant="fab" className={classes.fab} color="primary">
+					<AddIcon />
+				</Button>
+			</React.Fragment>
+		);
+	}
 }
 
 Users.propTypes = {
-  classes: PropTypes.object.isRequired
-}
+	classes: PropTypes.object.isRequired
+};
 
-const mapStateToProps = state => {
-  const { users } = state
+const mapStateToProps = (state) => {
+	const { users } = state;
 
-  return {
-    users
-  }
-}
+	return {
+		users
+	};
+};
 
 const mapDispatchToProps = {
-  fetchUsers
-}
+	fetchUsers
+};
 
-const enhance = compose(
-  withStyles(styles),
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )
-)
+const enhance = compose(withStyles(styles), connect(mapStateToProps, mapDispatchToProps));
 
-export default enhance(Users)
+export default enhance(Users);
