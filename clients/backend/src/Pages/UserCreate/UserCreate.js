@@ -2,21 +2,31 @@ import React, { Component } from 'react'
 
 import { compose } from 'redux'
 import { connect } from 'react-redux'
+import * as actions from '../Login/actions'
 
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { withStyles } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Drawer from '@material-ui/core/Drawer'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
 import IconButton from '@material-ui/core/IconButton'
+import Badge from '@material-ui/core/Badge'
+import MenuIcon from '@material-ui/icons/Menu'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
+import NotificationsIcon from '@material-ui/icons/Notifications'
+import Avatar from '@material-ui/core/Avatar'
+import VerifiedUserIcon from '@material-ui/icons/VerifiedUser'
+import ClearIcon from '@material-ui/icons/Clear'
+import green from '@material-ui/core/colors/green'
+import red from '@material-ui/core/colors/red'
 
-import Navigation from '../Components/Navigation'
-import TopBar from '../Components/TopBar'
+import Navigation from '../../Components/Navigation'
 
-import Routes from '../Routes'
+import UserCard from './UserCard'
 
 const drawerWidth = 240
 
@@ -91,37 +101,30 @@ const styles = (theme) => ({
   },
   tableContainer: {
     height: 320
+  },
+  greenAvatar: {
+    margin: '10px 10px 10px 0',
+    color: '#fff',
+    backgroundColor: green[500]
+  },
+  redAvatar: {
+    margin: '10px 10px 10px 0',
+    color: '#fff',
+    backgroundColor: red[500]
+  },
+  userHeader: {
+    marginBottom: '15px',
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center'
   }
 })
 
-class Layout extends Component {
+class UserCreate extends Component {
   constructor(props) {
     super()
-
     this.state = {
       open: true
-    }
-  }
-
-  componentWillMount() {
-    const { history, login } = this.props
-
-    const isAuth = login.isAuth
-
-    if (isAuth) {
-      history.push('/dashboard')
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { login } = this.props
-
-    const isAuth = login.isAuth
-
-    if (isAuth) {
-      this.setState({
-        isAuth: true
-      })
     }
   }
 
@@ -134,63 +137,41 @@ class Layout extends Component {
   }
 
   render() {
-    const { classes } = this.props
-    const { open, isAuth } = this.state
+    const { classes, login } = this.props
+
+    const { active, email } = login.user
 
     return (
-      <div>
-        {isAuth ? (
-          <React.Fragment>
-            <CssBaseline />
-            <div className={classes.root}>
-              <TopBar
-                pageTitle={'Layout'}
-                open={open}
-                handleDrawerOpen={this.handleDrawerOpen}
-              />
-              <Drawer
-                variant='permanent'
-                classes={{
-                  paper: classNames(
-                    classes.drawerPaper,
-                    !open && classes.drawerPaperClose
-                  )
-                }}
-                open={open}
-              >
-                <div className={classes.toolbarIcon}>
-                  <IconButton onClick={this.handleDrawerClose}>
-                    <ChevronLeftIcon />
-                  </IconButton>
-                </div>
-                <Divider />
-                <Navigation />
-              </Drawer>
-              <main className={classes.content}>
-                <Routes />
-              </main>
-            </div>
-          </React.Fragment>
-        ) : (
-            <Routes />
-          )}
-      </div>
+      <React.Fragment>
+        <div className={classes.appBarSpacer} />
+        <div className={classes.userHeader}>
+          {active ? (
+            <Avatar className={classes.greenAvatar}>
+              <VerifiedUserIcon />
+            </Avatar>
+          ) : (
+              <Avatar className={classes.redAvatar}>
+                <ClearIcon />
+              </Avatar>
+            )}
+          <Typography variant='display1'>{email}sss</Typography>
+        </div>
+        <div className={classes.tableContainer}>
+          <UserCard data={login.user} />
+        </div>
+      </React.Fragment>
     )
   }
 }
 
-Layout.propTypes = {
+UserCreate.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-const mapStateToProps = (state) => {
-  const { login } = state
-
-  return {
-    login
-  }
+function mapStateToProps({ login }) {
+  return { login }
 }
 
-const enhance = compose(withStyles(styles), connect(mapStateToProps))
+const enhance = compose(withStyles(styles), connect(mapStateToProps, actions))
 
-export default enhance(Layout)
+export default enhance(UserCreate)

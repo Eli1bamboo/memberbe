@@ -16,7 +16,7 @@ const SECRET = Buffer.from(process.env.SHARED_SECRET, 'base64');
 describe('Current User', function(done) {
   before((done) => {
     user = new UserModel({
-      email: 'pablo.admin@membrify.com',
+      email: 'pablo.admin@memberbe.com',
       firstName: 'Andres',
       lastName: '',
       passwordHash: '1234',

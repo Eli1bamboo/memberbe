@@ -47,7 +47,7 @@ describe('Delete Customer', function (done) {
           name: 'Customer name One',
           accountName: ACCOUNT_NAME_OPTIONS[0],
           accountType: ACCOUNT_TYPE_OPTIONS[0],
-          website: 'membrify.com',
+          website: 'memberbe.com',
           billingAddress: 'myBillinAddress',
           phoneNumber: '00585555555',
           installationAddress: 'myInstallationAddress',
@@ -55,7 +55,7 @@ describe('Delete Customer', function (done) {
           annualVolume: 100,
           annualVolumeUnit: ANNUAL_VOLUME_UNIT_OPTIONS[0],
           shippingAddress: 'myShippingAddress',
-          email: 'customer.mail@membrify.com',
+          email: 'customer.mail@memberbe.com',
           accountSource: 'myAccountSource',
           industryVertical: INDUSTRY_VERTICAL_OPTIONS[0]
         });

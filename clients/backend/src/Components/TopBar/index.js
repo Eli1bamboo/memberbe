@@ -41,7 +41,7 @@ const styles = (theme) => ({
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create([ 'width', 'margin' ], {
+    transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
     })
@@ -49,7 +49,7 @@ const styles = (theme) => ({
   appBarShift: {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create([ 'width', 'margin' ], {
+    transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen
     })
@@ -68,7 +68,7 @@ const styles = (theme) => ({
 })
 
 class TopBar extends Component {
-  constructor (props) {
+  constructor(props) {
     super()
 
     this.state = {
@@ -77,7 +77,7 @@ class TopBar extends Component {
     }
   }
 
-  componentWillMount () {
+  componentWillMount() {
     const { users } = this.props
 
     const { isSearching } = users
@@ -87,7 +87,7 @@ class TopBar extends Component {
     })
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     const { users } = nextProps
 
     const { isSearching } = users
@@ -110,7 +110,7 @@ class TopBar extends Component {
     history.push(url)
   }
 
-  render () {
+  render() {
     const { classes, pageTitle } = this.props
     const { anchorEl, isSearching } = this.state
 
@@ -183,7 +183,7 @@ class TopBar extends Component {
               </MenuItem>
               <Divider />
               <MenuItem onClick={this.handleClose} className={classes.menuItem}>
-                <LogoutButton />
+                <LogoutButton history={this.props.history} />
               </MenuItem>
             </Menu>
           </div>

@@ -42,7 +42,7 @@ class UserManager {
     const user = await this.getByEmail(email);
     if (!user) { return { token: null, user: null, message: 'User not found' }; }
     let confirmed = false;
-    try { confirmed = await bcrypt.compare(password, user.passwordHash); } catch (err) {}
+    try { confirmed = await bcrypt.compare(password, user.passwordHash); } catch (err) { }
     if (confirmed) {
       delete user._doc.passwordHash;
       const token = jwt.sign({ email: user.email, roles: user.roles }, SECRET);
@@ -102,10 +102,10 @@ class UserManager {
     const token = jwt.sign({ email: user.email }, `${SECRET}resetPass`, { expiresIn: '4h' })
     const frontHost = `${process.env.FRONT_HOST}retrieve-password-step-two?email=${user.email}&token=${token}`;
     sendMail(
-      'Create Your New Password At Membrify',
-      '<h3>Create Your New Password at Membrify</h3>' +
-            'You have enter to this link <a style="background-color: #008CBA;border: none;border-radius: 5px;color: white;padding: 10px 15px;text-align: center;text-decoration: none;display: inline-block;font-size: 13px;font-weight: bold;margin: 4px 2px;cursor: pointer;"' +
-            `href="${frontHost}">Create New Password</a> to retrieve your password in Membrify.`,
+      'Create Your New Password At Memberbe',
+      '<h3>Create Your New Password at Memberbe</h3>' +
+      'You have enter to this link <a style="background-color: #008CBA;border: none;border-radius: 5px;color: white;padding: 10px 15px;text-align: center;text-decoration: none;display: inline-block;font-size: 13px;font-weight: bold;margin: 4px 2px;cursor: pointer;"' +
+      `href="${frontHost}">Create New Password</a> to retrieve your password in Memberbe.`,
       user.email
     )
   }
@@ -148,8 +148,8 @@ class UserManager {
       user.passwordHash = data.newPassword;
       return await user.save().then(function (user) {
         sendMail(
-          'Password Changed Membrify',
-          '<h3>Password Reset</h3> You have updated you password successfully in Membrify',
+          'Password Changed Memberbe',
+          '<h3>Password Reset</h3> You have updated you password successfully in Memberbe',
           user.email
         )
         return user;
@@ -166,10 +166,10 @@ class UserManager {
     const token = jwt.sign({ email: user.email }, `${SECRET}resetPass`, { expiresIn: '4h' })
     const frontHost = `${process.env.FRONT_HOST}retrieve-password-step-two?email=${user.email}&token=${token}`;
     sendMail(
-      'Retreive Password Membrify',
+      'Retreive Password Memberbe',
       '<h3>Retrive Password</h3>' +
-            'You have enter to this link <a style="background-color: #008CBA;border: none;border-radius: 5px;color: white;padding: 10px 15px;text-align: center;text-decoration: none;display: inline-block;font-size: 13px;font-weight: bold;margin: 4px 2px;cursor: pointer;"' +
-            `href="${frontHost}">Reset Password</a> to retrieve your password in Membrify`,
+      'You have enter to this link <a style="background-color: #008CBA;border: none;border-radius: 5px;color: white;padding: 10px 15px;text-align: center;text-decoration: none;display: inline-block;font-size: 13px;font-weight: bold;margin: 4px 2px;cursor: pointer;"' +
+      `href="${frontHost}">Reset Password</a> to retrieve your password in Memberbe`,
       user.email
     )
     return true;
@@ -197,7 +197,7 @@ class UserManager {
       return await user.save().then(function (user) {
         sendMail(
           'Password Changed',
-          '<h3>Password Reset</h3> You have updated you password successfully in Membrify',
+          '<h3>Password Reset</h3> You have updated you password successfully in Memberbe',
           user.email
         )
         delete user._doc.passwordHash;

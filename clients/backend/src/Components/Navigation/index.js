@@ -28,9 +28,6 @@ const styles = {
 class Navigation extends Component {
   render() {
 
-    console.log("NAVIGATION PROPS");
-    console.log(this.props);
-
     return (
       <Fragment>
         <List>
@@ -50,12 +47,20 @@ class Navigation extends Component {
               <ListItemText primary='Users' />
             </ListItem>
           </Link>
-          <Link to='/user-profile'>
+          <Link to='/users/profile'>
             <ListItem button>
               <ListItemIcon>
                 <PeopleIcon />
               </ListItemIcon>
               <ListItemText primary='User Profile' />
+            </ListItem>
+          </Link>
+          <Link to='/users/create'>
+            <ListItem button>
+              <ListItemIcon>
+                <PeopleIcon />
+              </ListItemIcon>
+              <ListItemText primary='User Create' />
             </ListItem>
           </Link>
         </List>

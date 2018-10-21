@@ -25,7 +25,7 @@ var adminUser, adminToken, sysUser, sysToken, customer, newUser, invalidToken;
 describe('Create User', function (done) {
   before((done) => {
     adminUser = new UserModel({
-      email: 'pablo.admin@membrify.com',
+      email: 'pablo.admin@memberbe.com',
       firstName: 'Andres',
       lastName: '',
       roles: ['ADMIN'],
@@ -35,7 +35,7 @@ describe('Create User', function (done) {
       adminToken = 'Bearer ' + jwt.sign({ email: adminUser.email, roles: adminUser.roles }, SECRET);
 
       sysUser = new UserModel({
-        email: 'sys.admin@membrify.com',
+        email: 'sys.admin@memberbe.com',
         firstName: 'Andres',
         lastName: '',
         roles: ['SYS_ADMIN'],
@@ -53,7 +53,7 @@ describe('Create User', function (done) {
   });
 
   it('should return customerId error', function (done) {
-    const params = { email: 'user.1@membrify.com', firstName: 'User One', lastName: 'LastName One', customerId: '' };
+    const params = { email: 'user.1@memberbe.com', firstName: 'User One', lastName: 'LastName One', customerId: '' };
     chai.request(server)
       .post('/users/create')
       .set('Authorization', adminToken)
@@ -82,7 +82,7 @@ describe('Create User', function (done) {
       });
   });
   it('should create an user without customer', function (done) {
-    const params = { firstName: 'John', lastName: 'Doe', email: 'john.dou@membrify.com' };
+    const params = { firstName: 'John', lastName: 'Doe', email: 'john.dou@memberbe.com' };
     chai.request(server)
       .post('/users/create')
       .set('Authorization', adminToken)
@@ -95,7 +95,7 @@ describe('Create User', function (done) {
       });
   });
   it('as USER should not create User', function (done) {
-    const params = { firstName: 'John', lastName: 'Doe', email: 'john.dou@membrify.com' };
+    const params = { firstName: 'John', lastName: 'Doe', email: 'john.dou@memberbe.com' };
     chai.request(server)
       .post('/users/create')
       .set('Authorization', adminToken)
@@ -107,7 +107,7 @@ describe('Create User', function (done) {
       });
   });
   it('as ADMIN should not assign role at create User', function (done) {
-    const params = { firstName: 'John', lastName: 'Doe', email: 'john.dou.whitin.roles@membrify.com', roles: ['ADMIN']};
+    const params = { firstName: 'John', lastName: 'Doe', email: 'john.dou.whitin.roles@memberbe.com', roles: ['ADMIN']};
     chai.request(server)
       .post('/users/create')
       .set('Authorization', adminToken)
@@ -121,7 +121,7 @@ describe('Create User', function (done) {
       });
   });
   it('should create an ADMIN user by SYS_ADMIN role', function (done) {
-    const params = { firstName: 'John', lastName: 'Doe', email: 'john.dou.admin@membrify.com', roles: ['ADMIN'] };
+    const params = { firstName: 'John', lastName: 'Doe', email: 'john.dou.admin@memberbe.com', roles: ['ADMIN'] };
     chai.request(server)
       .post('/users/create')
       .set('Authorization', sysToken)
@@ -135,7 +135,7 @@ describe('Create User', function (done) {
       });
   });
   it('should create a simple USER user by SYS_ADMIN role', function (done) {
-    const params = { firstName: 'John', lastName: 'Doe', email: 'john.dou.user@membrify.com', roles: ['USER'] };
+    const params = { firstName: 'John', lastName: 'Doe', email: 'john.dou.user@memberbe.com', roles: ['USER'] };
     chai.request(server)
       .post('/users/create')
       .set('Authorization', sysToken)
@@ -156,7 +156,7 @@ describe('Create User', function (done) {
         name: 'CustomerOne',
         accountName: ACCOUNT_NAME_OPTIONS[0],
         accountType: ACCOUNT_TYPE_OPTIONS[0],
-        website: 'membrify.com',
+        website: 'memberbe.com',
         billingAddress: 'myBillinAddress',
         phoneNumber: '00585555555',
         installationAddress: 'myInstallationAddress',
@@ -164,7 +164,7 @@ describe('Create User', function (done) {
         annualVolume: 100,
         annualVolumeUnit: ANNUAL_VOLUME_UNIT_OPTIONS[0],
         shippingAddress: 'myShippingAddress',
-        email: 'customer.mail@membrify.com',
+        email: 'customer.mail@memberbe.com',
         accountSource: 'myAccountSource',
         industryVertical: INDUSTRY_VERTICAL_OPTIONS[0]
       });
@@ -175,7 +175,7 @@ describe('Create User', function (done) {
       CustomerModel.remove({}, (err) => { done(); });
     });
     it('email already exists', function (done) {
-      const params = { firstName: 'John', lastName: 'Doe', email: 'john.dou@membrify.com', customerId: ''+customer._id};
+      const params = { firstName: 'John', lastName: 'Doe', email: 'john.dou@memberbe.com', customerId: ''+customer._id};
       chai.request(server)
         .post('/users/create')
         .set('Authorization', adminToken)
@@ -189,7 +189,7 @@ describe('Create User', function (done) {
     });
     
     it('should create an user with a customer associated', function (done) {
-      const params = { firstName: 'John', lastName: 'Doe', email: 'john.dou2@membrify.com', customerId: ''+customer._id};
+      const params = { firstName: 'John', lastName: 'Doe', email: 'john.dou2@memberbe.com', customerId: ''+customer._id};
       chai.request(server)
         .post('/users/create')
         .set('Authorization', adminToken)

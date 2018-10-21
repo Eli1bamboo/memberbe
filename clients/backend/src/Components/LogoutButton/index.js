@@ -21,6 +21,7 @@ class LogoutButton extends Component {
 
   handleLogout = () => {
     const { history } = this.props
+    console.log(this.props);
     this.doLogout()
     history.push('/')
   }
