@@ -5,12 +5,17 @@ const memberRoutes = require('./member-routes');
 const user = require('./user-routes');
 const admin = require('./admin-routes');
 const Um = require('../services/user-manager');
-const UserManager = new Um()
 const AccessControl = require('../utils/access-control');
+
+const UserManager = new Um()
+
+const unlessPaths = ['/users/signup', '/users-initial-setup', '/admins-initial-setup',
+  '/health', '/alive', '/users/login', '/admins/login',
+  '/users/retrieve-password-step-one', '/users/retrieve-password-step-two']
 
 module.exports = function (app) {
   app.use(jwt({ secret: Buffer.from(process.env.SHARED_SECRET, 'base64') })
-    .unless({ path: ['/users/signup', '/users-initial-setup', '/admins-initial-setup', '/health', '/alive', '/users/login', '/admins/login', '/users/retrieve-password-step-one', '/users/retrieve-password-step-two'] }));
+    .unless({ path: unlessPaths }));
 
   app.use(function (err, req, res, next) {
     if (err.name === 'UnauthorizedError') {

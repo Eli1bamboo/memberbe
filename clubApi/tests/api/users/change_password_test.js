@@ -27,7 +27,7 @@ var user, token, customer;
 describe('Change User\'s password', function (done) {
   before((done) => {
     user = new UserModel({
-      email: 'user@membrify.com',
+      email: 'user@memberbe.com',
       firstName: 'User',
       lastName: 'Missed',
       roles: ['ADMIN'],
@@ -84,7 +84,7 @@ describe('Change User\'s password', function (done) {
     });
     it('should return a valid user and token login', function(done) {
       let user = {
-          email: "user@membrify.com",
+          email: "user@memberbe.com",
           password: "123456"
         }
       chai.request(server)

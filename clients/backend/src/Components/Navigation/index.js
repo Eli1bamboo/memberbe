@@ -45,7 +45,7 @@ class Navigation extends Component {
 							<ListItemText primary="Users" />
 						</ListItem>
 					</Link>
-					<Link to="/user-profile">
+					<Link to="/users/profile">
 						<ListItem button>
 							<ListItemIcon>
 								<PeopleIcon />
@@ -53,9 +53,18 @@ class Navigation extends Component {
 							<ListItemText primary="User Profile" />
 						</ListItem>
 					</Link>
+					<Link to="/users/create">
+						<ListItem button>
+							<ListItemIcon>
+								<PeopleIcon />
+							</ListItemIcon>
+							<ListItemText primary="User Create" />
+						</ListItem>
+					</Link>
 				</List>
 				<Divider />
 				<List>
+					<ListSubheader inset>Saved reports</ListSubheader>
 					<ListItem button>
 						<LogoutButton history={this.props.history} />
 					</ListItem>

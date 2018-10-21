@@ -76,7 +76,7 @@ describe('Create Customer', function (done) {
       name: 'CustomerOne',
       accountName: 'invalid option',
       accountType: 'invalid option',
-      website: 'membrify.com',
+      website: 'memberbe.com',
       billingAddress: 'myBillinAddress',
       phoneNumber: '00585555555',
       installationAddress: 'myInstallationAddress',
@@ -84,7 +84,7 @@ describe('Create Customer', function (done) {
       annualVolume: 100,
       annualVolumeUnit: 'invalid option',
       shippingAddress: 'myShippingAddress',
-      email: 'customer.mail@membrify.com',
+      email: 'customer.mail@memberbe.com',
       accountSource: 'myAccountSource',
       industryVertical: 'invalid option'
     };
@@ -111,7 +111,7 @@ describe('Create Customer', function (done) {
       name: 'myCustomerOne',
       accountName: ACCOUNT_NAME_OPTIONS[0],
       accountType: ACCOUNT_TYPE_OPTIONS[0],
-      website: 'membrify.com',
+      website: 'memberbe.com',
       billingAddress: 'myBillinAddress',
       phoneNumber: '00585555555',
       installationAddress: 'myInstallationAddress',
@@ -119,7 +119,7 @@ describe('Create Customer', function (done) {
       annualVolume: 100,
       annualVolumeUnit: ANNUAL_VOLUME_UNIT_OPTIONS[0],
       shippingAddress: 'myShippingAddress',
-      email: 'customer.mail@membrify.com',
+      email: 'customer.mail@memberbe.com',
       accountSource: 'myAccountSource',
       industryVertical: INDUSTRY_VERTICAL_OPTIONS[0]
     };

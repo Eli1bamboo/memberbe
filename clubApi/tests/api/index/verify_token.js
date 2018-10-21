@@ -16,7 +16,7 @@ describe('Verify User', function(done) {
   before((done) => {
     UserModel.remove({}, (err) => {});
     user = new UserModel({
-      email: 'pablo.donaire@membrify.com',
+      email: 'pablo.donaire@memberbe.com',
       firstName: 'Andres',
       lastName: '',
       customerId: null,

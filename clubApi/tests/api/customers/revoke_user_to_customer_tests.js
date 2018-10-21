@@ -25,14 +25,14 @@ var adminUser, user, adminToken, customer;
 describe('Get Customer', function (done) {
   before((done) => {
     adminUser = new UserModel({
-      email: 'pablo.admin@membrify.com',
+      email: 'pablo.admin@memberbe.com',
       firstName: 'Andres',
       lastName: '',
       roles: ['ADMIN'],
       passwordHash: '1234'
     });
     user = new UserModel({
-      email: 'pablo.user@membrify.com',
+      email: 'pablo.user@memberbe.com',
       firstName: 'Andres',
       lastName: '',
       roles: ['USER'],
@@ -46,7 +46,7 @@ describe('Get Customer', function (done) {
           name: 'Customer name one',
           accountName: ACCOUNT_NAME_OPTIONS[0],
           accountType: ACCOUNT_TYPE_OPTIONS[0],
-          website: 'membrify.com',
+          website: 'memberbe.com',
           billingAddress: 'myBillinAddress',
           phoneNumber: '00585555555',
           installationAddress: 'myInstallationAddress',
@@ -54,7 +54,7 @@ describe('Get Customer', function (done) {
           annualVolume: 100,
           annualVolumeUnit: ANNUAL_VOLUME_UNIT_OPTIONS[0],
           shippingAddress: 'myShippingAddress',
-          email: 'customer.mail@membrify.com',
+          email: 'customer.mail@memberbe.com',
           accountSource: 'myAccountSource',
           industryVertical: INDUSTRY_VERTICAL_OPTIONS[0]
         });

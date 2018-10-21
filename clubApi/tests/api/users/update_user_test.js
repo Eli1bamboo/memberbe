@@ -25,7 +25,7 @@ var token, customer, passwordHash;
 describe('Update User', function(done) {
   before((done) => {
     var user = new UserModel({
-      email: 'pablo.donaire@membrify.com',
+      email: 'pablo.donaire@memberbe.com',
       firstName: 'firstN',
       lastName: 'lastN',
       customerId: null,
@@ -66,7 +66,7 @@ describe('Update User', function(done) {
         name: 'CustomerOne',
         accountName: ACCOUNT_NAME_OPTIONS[0],
         accountType: ACCOUNT_TYPE_OPTIONS[0],
-        website: 'membrify.com',
+        website: 'memberbe.com',
         billingAddress: 'myBillinAddress',
         phoneNumber: '00585555555',
         installationAddress: 'myInstallationAddress',
@@ -74,7 +74,7 @@ describe('Update User', function(done) {
         annualVolume: 100,
         annualVolumeUnit: ANNUAL_VOLUME_UNIT_OPTIONS[0],
         shippingAddress: 'myShippingAddress',
-        email: 'customer.mail@membrify.com',
+        email: 'customer.mail@memberbe.com',
         accountSource: 'myAccountSource',
         industryVertical: INDUSTRY_VERTICAL_OPTIONS[0]
       });
@@ -89,7 +89,7 @@ describe('Update User', function(done) {
     // updatedAt
     it('should not update email, customerId, active, company_account, role, passwordHash, createdAt', function(done) {
       var params = {
-        email: 'example@membrify.com', 
+        email: 'example@memberbe.com', 
         customerId: customer._id, 
         active: false, 
         company_account: 'my company', 

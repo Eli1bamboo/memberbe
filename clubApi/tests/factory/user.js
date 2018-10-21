@@ -1,6 +1,6 @@
 /* 
  * created by: @andresdicamillo
- * mailto:pablo.donaire@membrify.com
+ * mailto:pablo.donaire@memberbe.com
  */
 const UserModel = require('../../models/user-model.js');
 

@@ -1,6 +1,6 @@
 /* 
  * created by: @andresdicamillo
- * mailto:pablo.donaire@membrify.com
+ * mailto:pablo.donaire@memberbe.com
  */
 const ProductModel = require('../../models/product-model.js');
 const { PRODUCT_TYPE_OPTIONS } = require('../../constants');
