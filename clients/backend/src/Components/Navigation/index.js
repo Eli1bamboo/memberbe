@@ -64,7 +64,6 @@ class Navigation extends Component {
 				</List>
 				<Divider />
 				<List>
-					<ListSubheader inset>Saved reports</ListSubheader>
 					<ListItem button>
 						<LogoutButton history={this.props.history} />
 					</ListItem>
